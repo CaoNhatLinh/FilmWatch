@@ -17,12 +17,8 @@ import java.util.List;
 
 
 public class ListPhimFragment extends Fragment {
-
-
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-
     private PhimDAO phimDao;
     public ListPhimFragment() {
         // Required empty public constructor

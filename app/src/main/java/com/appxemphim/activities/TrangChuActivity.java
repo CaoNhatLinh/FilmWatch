@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.appxemphim.R;
 
 public class TrangChuActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
