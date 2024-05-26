@@ -3,23 +3,25 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:id="@+id/viewDetailPhim"
     android:background="@drawable/bg_item_movie"
     android:padding="4dp">
 
     <ImageView
         android:id="@+id/imageViewPoster"
-        android:layout_width="100dp"
-        android:layout_height="150dp"
-        android:scaleType="centerCrop"/>
+        android:layout_width="112dp"
+        android:layout_height="168dp"
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/textViewTitle"
-        android:layout_width="100dp"
+        android:layout_width="112dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="Movie Title"
-        android:textSize="12sp"
+        android:textAlignment="center"
         android:textColor="@color/light_white"
-        android:textStyle="bold"
-        android:textAlignment="center" />
+        android:textSize="12sp"
+        android:textAllCaps="false"
+        android:textStyle="bold" />
 </LinearLayout>

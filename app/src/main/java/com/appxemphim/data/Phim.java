@@ -13,7 +13,7 @@ public class Phim
     private int NamPhatHanh;
     private String NgonNgu;
     private String DaoDien;
-    private int ThoiLuong;
+    private String ThoiLuong;
 
     public int getMaPhim() {
         return MaPhim;
@@ -71,11 +71,11 @@ public class Phim
         DaoDien = daoDien;
     }
 
-    public int getThoiLuong() {
+    public String getThoiLuong() {
         return ThoiLuong;
     }
 
-    public void setThoiLuong(int thoiLuong) {
+    public void setThoiLuong(String thoiLuong) {
         ThoiLuong = thoiLuong;
     }
 
@@ -152,7 +152,16 @@ public class Phim
     private int MaQuocGia;
     private String DienVien;
 
-    public Phim(int maPhim, String tieuDe, String tieuDeQuocTe, String moTa, int namPhatHanh, String ngonNgu, String daoDien, int thoiLuong, String chatLuong, String tinhTrang, String anhBia, String trailerURL, Date ngayThem, int soTap, int maQuocGia, String dienVien) {
+    public String getBanner() {
+        return Banner;
+    }
+
+    public void setBanner(String banner) {
+        Banner = banner;
+    }
+
+    private String Banner;
+    public Phim(int maPhim, String tieuDe, String tieuDeQuocTe, String moTa, int namPhatHanh, String ngonNgu, String daoDien, String thoiLuong, String chatLuong, String tinhTrang, String dienVien,String anhBia, String banner, String trailerURL, Date ngayThem, int soTap, int maQuocGia) {
         MaPhim = maPhim;
         TieuDe = tieuDe;
         TieuDeQuocTe = tieuDeQuocTe;
@@ -169,6 +178,7 @@ public class Phim
         SoTap = soTap;
         MaQuocGia = maQuocGia;
         DienVien = dienVien;
+        Banner = banner;
     }
 }
 

@@ -23,7 +23,16 @@ public interface ApiClient {
             .create(ApiClient.class);
 
     @GET("api/phim")
-    Call<List<Phim>> getlistPhim();
-
+    Call<List<Phim>> getListPhim();
+    @GET("api/phim/banner")
+    Call<List<Phim>> getListBanner();
+    @GET("api/phim/banner")
+    Call<List<Phim>> getListPhimMoi();
+    @GET("api/phim/banner")
+    Call<List<Phim>> getListPhimTrungQuocHot();
+    @GET("api/phim/banner")
+    Call<List<Phim>> getListPhimAuMyHot();
+    @GET("api/phim/banner")
+    Call<List<Phim>> getListPhimDaXem();
     }
 

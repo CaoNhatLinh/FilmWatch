@@ -20,7 +20,7 @@ public class PhimDAO {
     }
 
     public void getPhimList(final PhimCallback callback) {
-        Call<List<Phim>> call = apiClient.getlistPhim();
+        Call<List<Phim>> call = apiClient.getListPhim();
         call.enqueue(new Callback<List<Phim>>() {
             @Override
             public void onResponse(Call<List<Phim>> call, Response<List<Phim>> response) {
@@ -31,7 +31,99 @@ public class PhimDAO {
                     callback.onFailure("Failed to fetch data: " + response.message());
                 }
             }
+            @Override
+            public void onFailure(Call<List<Phim>> call, Throwable t) {
+                callback.onFailure(t.getMessage());
+            }
+        });
+    }
 
+    public void getTop5Phim(final PhimCallback callback) {
+        Call<List<Phim>> call = apiClient.getListBanner();
+        call.enqueue(new Callback<List<Phim>>() {
+            @Override
+            public void onResponse(Call<List<Phim>> call, Response<List<Phim>> response) {
+                if (response.isSuccessful()) {
+                    List<Phim> phimList = response.body();
+                    callback.onSuccess(phimList);
+                } else {
+                    callback.onFailure("Failed to fetch data: " + response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<List<Phim>> call, Throwable t) {
+                callback.onFailure(t.getMessage());
+            }
+        });
+    }
+    public void getListPhimMoi(final PhimCallback callback) {
+        Call<List<Phim>> call = apiClient.getListPhimMoi();
+        call.enqueue(new Callback<List<Phim>>() {
+            @Override
+            public void onResponse(Call<List<Phim>> call, Response<List<Phim>> response) {
+                if (response.isSuccessful()) {
+                    List<Phim> phimList = response.body();
+                    callback.onSuccess(phimList);
+                } else {
+                    callback.onFailure("Failed to fetch data: " + response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<List<Phim>> call, Throwable t) {
+                callback.onFailure(t.getMessage());
+            }
+        });
+    }
+    public void getListPhimTrungQuocHot(final PhimCallback callback) {
+        Call<List<Phim>> call = apiClient.getListPhimTrungQuocHot();
+        call.enqueue(new Callback<List<Phim>>() {
+            @Override
+            public void onResponse(Call<List<Phim>> call, Response<List<Phim>> response) {
+                if (response.isSuccessful()) {
+                    List<Phim> phimList = response.body();
+                    callback.onSuccess(phimList);
+                } else {
+                    callback.onFailure("Failed to fetch data: " + response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<List<Phim>> call, Throwable t) {
+                callback.onFailure(t.getMessage());
+            }
+        });
+    }
+    public void getListPhimAuMyHot(final PhimCallback callback) {
+        Call<List<Phim>> call = apiClient.getListPhimAuMyHot();
+        call.enqueue(new Callback<List<Phim>>() {
+            @Override
+            public void onResponse(Call<List<Phim>> call, Response<List<Phim>> response) {
+                if (response.isSuccessful()) {
+                    List<Phim> phimList = response.body();
+                    callback.onSuccess(phimList);
+                } else {
+                    callback.onFailure("Failed to fetch data: " + response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<List<Phim>> call, Throwable t) {
+                callback.onFailure(t.getMessage());
+            }
+        });
+    }
+
+
+    public void getListPhimDaXem(final PhimCallback callback) {
+        Call<List<Phim>> call = apiClient.getListPhimDaXem();
+        call.enqueue(new Callback<List<Phim>>() {
+            @Override
+            public void onResponse(Call<List<Phim>> call, Response<List<Phim>> response) {
+                if (response.isSuccessful()) {
+                    List<Phim> phimList = response.body();
+                    callback.onSuccess(phimList);
+                } else {
+                    callback.onFailure("Failed to fetch data: " + response.message());
+                }
+            }
             @Override
             public void onFailure(Call<List<Phim>> call, Throwable t) {
                 callback.onFailure(t.getMessage());

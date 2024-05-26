@@ -1,0 +1,35 @@
+<!-- res/drawable/button_selector.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Trạng thái khi nhấn -->
+    <item android:state_pressed="true">
+        <shape>
+            <gradient
+                android:startColor="#E81E122C"
+                android:endColor="#0F0D19"
+                android:angle="1"/>
+            <corners android:radius="3dp"/>
+        </shape>
+    </item>
+    <!-- Trạng thái khi lấy nét -->
+    <item android:state_focused="true">
+        <shape >
+            <gradient
+                android:startColor="#E81E122C"
+                android:endColor="#0F0D19"
+                android:angle="1"/>
+            <corners android:radius="3dp"/>
+        </shape>
+    </item>
+    <!-- Trạng thái mặc định -->
+    <item>
+        <shape >
+            <gradient
+                android:startColor="#001E122C"
+                android:endColor="#000F0D19"
+                android:angle="1"/>
+            <corners android:radius="3dp"/>
+        </shape>
+    </item>
+</selector>
+
+

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.ProfileFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_focus"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_item_profile">
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/people"
+                android:paddingHorizontal="15dp"
+                />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Nguyên Van A"
+                android:textColor="@color/white"
+                />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnYeuThich"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@drawable/bg_focus"
+            android:gravity="start|center_vertical"
+            android:paddingHorizontal="15dp"
+            android:drawableEnd="@drawable/arrowright"
+            android:text="Danh sách phim của tôi yêu thích"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginVertical="3dp" />
+
+        <Button
+            android:id="@+id/btnHistoryMovies"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@drawable/bg_focus"
+            android:drawablePadding="12dp"
+            android:drawableEnd="@drawable/arrowright"
+            android:gravity="start|center_vertical"
+            android:paddingHorizontal="15dp"
+            android:text="Lịch sử xem"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginVertical="3dp" />
+        <Button
+            android:id="@+id/btnProfileDetails"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@drawable/bg_focus"
+            android:drawableEnd="@drawable/arrowright"
+            android:drawablePadding="12dp"
+            android:gravity="start|center_vertical"
+            android:paddingHorizontal="15dp"
+            android:text="Thông tin cá nhân"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginVertical="3dp" />
+        <Button
+            android:id="@+id/btnCD"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@drawable/bg_focus"
+            android:drawableEnd="@drawable/arrowright"
+            android:drawablePadding="12dp"
+            android:gravity="start|center_vertical"
+            android:paddingHorizontal="15dp"
+            android:text="Cài đặt"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginVertical="3dp" />
+        <Button
+            android:id="@+id/btnCH"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@drawable/bg_focus"
+            android:drawableEnd="@drawable/arrowright"
+            android:drawablePadding="12dp"
+            android:gravity="start|center_vertical"
+            android:paddingHorizontal="15dp"
+            android:text="Câu hỏi thường gặp"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginVertical="3dp" />
+    </LinearLayout>
+</FrameLayout>
