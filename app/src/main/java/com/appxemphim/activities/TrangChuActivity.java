@@ -59,9 +59,13 @@ public class TrangChuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (flag != profileLayout.getId()) {
-                replaceFragment(new ProfileFragment());
-                setBackgroundColor(profileLayout,homeLayout,moviesLayout);
-                flag= profileLayout.getId();
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("MaNguoiDung", 1);
+                    Fragment fragmentProfile = new ProfileFragment();
+                    fragmentProfile.setArguments(bundle);
+                    replaceFragment(fragmentProfile);
+                    setBackgroundColor(profileLayout,homeLayout,moviesLayout);
+                    flag= profileLayout.getId();
                 }
             }
         });

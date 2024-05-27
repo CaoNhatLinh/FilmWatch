@@ -5,22 +5,31 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 import com.appxemphim.R;
 import com.appxemphim.activities.HistoryMovieActivity;
 import com.appxemphim.activities.ProfileDetailActivity;
+import com.appxemphim.dao.NguoiDungDAO;
+import com.appxemphim.data.NguoiDung;
+import com.appxemphim.data.Phim;
+
+import java.util.List;
 
 
 public class ProfileFragment extends Fragment {
 
     private Button btnHistoryMoives;
     private Button btnProfileDetails;
+    private NguoiDungDAO nguoiDungDAO;
 
+    private TextView tvName;
     public ProfileFragment() {
     }
 
@@ -37,8 +46,15 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        tvName = view.findViewById(R.id.tvName);
         gotoHistoryMoivesActivity(view);
         gotoProfileDetailsActivity(view);
+        nguoiDungDAO = new NguoiDungDAO();
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            int data = bundle.getInt("MaNguoiDung");
+            getProfileById(data);
+        }
         return view;
     }
 
@@ -49,7 +65,27 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), HistoryMovieActivity.class);
+
                 startActivity(intent);
+            }
+        });
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+    public void getProfileById(int id)
+    {
+        nguoiDungDAO.getProfileById(id, new NguoiDungDAO.NguoiDungCallback() {
+            @Override
+            public void onSuccess(NguoiDung nguoiDung) {
+                tvName.setText(nguoiDung.getHoTen());
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                Log.e("ProfileFragment", "Failed to fetch data: " + errorMessage);
             }
         });
     }

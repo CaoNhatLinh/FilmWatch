@@ -1,4 +1,5 @@
 package com.appxemphim.Api;
+import com.appxemphim.data.NguoiDung;
 import com.appxemphim.data.Phim;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -9,6 +10,7 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiClient {
@@ -22,6 +24,9 @@ public interface ApiClient {
             .build()
             .create(ApiClient.class);
 
+
+    // Phim
+
     @GET("api/phim")
     Call<List<Phim>> getListPhim();
     @GET("api/phim/banner")
@@ -34,5 +39,9 @@ public interface ApiClient {
     Call<List<Phim>> getListPhimAuMyHot();
     @GET("api/phim/banner")
     Call<List<Phim>> getListPhimDaXem();
+
+    //Nguoi dung
+    @GET("api/nguoidung/{id}")
+    Call<NguoiDung> getProfileById(@Path("id") int MaNguoiDung);
     }
 

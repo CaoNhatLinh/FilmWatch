@@ -8,5 +8,5 @@ android:shape="rectangle">
     android:centerX="0.8"
     android:centerY="0.8"
     android:angle="45"/>
-<corners android:radius="3dp"/>
+<corners android:radius="0dp"/>
 </shape>

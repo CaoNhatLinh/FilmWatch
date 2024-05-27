@@ -102,6 +102,7 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
     private void loadPhimMoi() {
 
         phimDAO.getListPhimTrungQuocHot(new PhimDAO.PhimCallback() {

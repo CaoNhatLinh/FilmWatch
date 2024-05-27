@@ -48,6 +48,144 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+        <TextView
+            android:id="@+id/textViewFullName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Họ và tên"
+            android:textColor="@color/light_white"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/editTextFullName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewFullName"
+            android:hint="Nhập họ và tên"
+            android:inputType="textPersonName"
+            android:maxLines="1"
+            android:minHeight="48dp"
+            android:textColor="@color/light_white"
+            android:textColorHint="@color/light_white" />
+
+        <!-- Tên đăng nhập -->
+        <TextView
+            android:id="@+id/textViewUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editTextFullName"
+            android:text="Tên đăng nhập"
+            android:textColor="@color/light_white"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/editTextUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewUsername"
+            android:hint="Nhập tên đăng nhập"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:textColor="@color/light_white"
+             android:textColorHint="@color/light_white" />
+
+        <!-- Email -->
+        <TextView
+            android:id="@+id/textViewEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editTextUsername"
+            android:text="Email"
+            android:textColor="@color/light_white"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/editTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewEmail"
+            android:hint="Nhập địa chỉ email"
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp"
+            android:textColor="@color/light_white"
+            android:textColorHint="@color/light_white" />
+
+        <!-- Giới tính -->
+        <TextView
+            android:id="@+id/textViewGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editTextEmail"
+            android:text="Giới tính"
+
+            android:textColor="@color/light_white"
+            android:textColorHint="@color/light_white"
+            android:textSize="16sp" />
+
+        <RadioGroup
+            android:id="@+id/radioGroupGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewGender"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioButtonMale"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:textColor="@android:color/white"
+                android:text="Nam" />
+
+            <RadioButton
+                android:id="@+id/radioButtonFemale"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:text="Nữ"
+                android:textColor="@color/light_white"
+                />
+
+            <!-- Thêm các tùy chọn giới tính khác nếu cần -->
+        </RadioGroup>
+
+        <!-- Ảnh đại diện -->
+        <TextView
+            android:id="@+id/textViewAvatar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/radioGroupGender"
+            android:textColor="@color/light_white"
+            android:text="Ảnh đại diện"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/imageViewAvatar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_below="@id/textViewAvatar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:background="@android:drawable/arrow_up_float"
+            android:scaleType="centerCrop" />
+
+        <Button
+            android:id="@+id/buttonChangeAvatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageViewAvatar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="Thay đổi ảnh đại diện" />
+
+        <!-- Button cập nhật thông tin -->
+        <Button
+            android:id="@+id/buttonUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttonChangeAvatar"
+            android:background="@drawable/bg_item_profile"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/light_white"
+            android:text="Cập nhật thông tin" />
 
     </LinearLayout>
 
