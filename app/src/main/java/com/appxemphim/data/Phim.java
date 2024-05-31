@@ -103,13 +103,7 @@ public class Phim
         AnhBia = anhBia;
     }
 
-    public String getTrailerURL() {
-        return TrailerURL;
-    }
 
-    public void setTrailerURL(String trailerURL) {
-        TrailerURL = trailerURL;
-    }
 
     public Date getNgayThem() {
         return NgayThem;
@@ -127,13 +121,8 @@ public class Phim
         SoTap = soTap;
     }
 
-    public int getMaQuocGia() {
-        return MaQuocGia;
-    }
 
-    public void setMaQuocGia(int maQuocGia) {
-        MaQuocGia = maQuocGia;
-    }
+
 
     public String getDienVien() {
         return DienVien;
@@ -146,10 +135,18 @@ public class Phim
     private String ChatLuong;
     private String TinhTrang;
     private String AnhBia;
-    private String TrailerURL;
     private Date NgayThem;
     private int SoTap;
-    private int MaQuocGia;
+
+    public String getQuocGia() {
+        return QuocGia;
+    }
+
+    public void setQuocGia(String quocGia) {
+        QuocGia = quocGia;
+    }
+
+    private String QuocGia;
     private String DienVien;
 
     public String getBanner() {
@@ -161,7 +158,7 @@ public class Phim
     }
 
     private String Banner;
-    public Phim(int maPhim, String tieuDe, String tieuDeQuocTe, String moTa, int namPhatHanh, String ngonNgu, String daoDien, String thoiLuong, String chatLuong, String tinhTrang, String dienVien,String anhBia, String banner, String trailerURL, Date ngayThem, int soTap, int maQuocGia) {
+    public Phim(int maPhim, String tieuDe, String tieuDeQuocTe, String moTa, int namPhatHanh, String ngonNgu, String daoDien, String thoiLuong, String chatLuong, String tinhTrang, String dienVien,String anhBia, String banner, Date ngayThem, int soTap, String quocGia) {
         MaPhim = maPhim;
         TieuDe = tieuDe;
         TieuDeQuocTe = tieuDeQuocTe;
@@ -173,10 +170,9 @@ public class Phim
         ChatLuong = chatLuong;
         TinhTrang = tinhTrang;
         AnhBia = anhBia;
-        TrailerURL = trailerURL;
         NgayThem = ngayThem;
         SoTap = soTap;
-        MaQuocGia = maQuocGia;
+        QuocGia = quocGia;
         DienVien = dienVien;
         Banner = banner;
     }
