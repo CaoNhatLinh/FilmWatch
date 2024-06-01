@@ -7,6 +7,9 @@
     android:background="@color/main_color"
     tools:context=".activities.LoginActivity">
 
+
+
+
     <LinearLayout
         android:layout_width="409dp"
         android:layout_height="912dp"
@@ -14,6 +17,7 @@
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp"
         tools:ignore="MissingConstraints">
+
 
         <TextView
             android:id="@+id/textView"
@@ -30,7 +34,7 @@
             android:text="ĐĂNG NHẬP" />
 
         <EditText
-            android:id="@+id/etEmailTDN"
+            android:id="@+id/editTextEmailOrUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -44,7 +48,7 @@
             tools:ignore="SpeakableTextPresentCheck" />
 
         <EditText
-            android:id="@+id/etMatKhau"
+            android:id="@+id/editTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -72,7 +76,7 @@
             tools:ignore="TextSizeCheck" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnDangNhap"
+            android:id="@+id/buttonLogin"
             style="@android:style/Widget.Button"
             android:layout_width="match_parent"
             android:background="@drawable/button_background"
@@ -100,7 +104,7 @@
             tools:ignore="TextSizeCheck" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/tvDK"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
