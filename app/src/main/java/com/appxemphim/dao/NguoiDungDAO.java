@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.appxemphim.Api.ApiClient;
 import com.appxemphim.data.NguoiDung;
+import com.appxemphim.data.LoginRequest;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,7 +53,56 @@ public class NguoiDungDAO {
         });
     }
 
+//Triệu theem
+    // Phương thức đăng nhập
+    public void login(String emailOrUsername, String password, final LoginCallback callback) {
+        Call<NguoiDung> call = apiClient.login(new LoginRequest(emailOrUsername, password));
+        call.enqueue(new Callback<NguoiDung>() {
+            @Override
+            public void onResponse(Call<NguoiDung> call, Response<NguoiDung> response) {
+                if (response.isSuccessful()) {
+                    NguoiDung nguoiDung = response.body();
+                    callback.onSuccess(nguoiDung);
+                } else {
+                    callback.onFailure("Failed to login: " + response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<NguoiDung> call, Throwable t) {
+                callback.onFailure(t.getMessage());
+            }
+        });
+    }
+    public void register(NguoiDung nguoiDung, final RegisterCallback callback) {
+        Call<Void> call = apiClient.register(nguoiDung);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess();
+                } else {
+                    callback.onFailure("Failed to register: " + response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                callback.onFailure(t.getMessage());
+            }
+        });
+    }
+
+    public interface RegisterCallback {
+        void onSuccess();
+        void onFailure(String message);
+    }
+
+
     public interface NguoiDungCallback {
+        void onSuccess(NguoiDung nguoiDung);
+        void onFailure(String message);
+    }
+
+    public interface LoginCallback {
         void onSuccess(NguoiDung nguoiDung);
         void onFailure(String message);
     }
