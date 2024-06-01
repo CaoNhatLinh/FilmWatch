@@ -6,7 +6,16 @@ import java.util.Date;
 public class NguoiDung {
     private int MaNguoiDung;
     private String TenDangNhap;
+
+    private  String Email;
     private String MatKhau;
+    public NguoiDung( String tenDangNhap, String matKhau, String email) {
+
+        TenDangNhap = tenDangNhap;
+        MatKhau = matKhau;
+        Email = email;
+
+    }
 
         public int getMaNguoiDung() {
             return MaNguoiDung;
@@ -80,7 +89,7 @@ public class NguoiDung {
         NgayDangKy = ngayDangKy;
     }
 
-    private String Email;
+
     private String HoTen;
 
     public NguoiDung(int maNguoiDung, String tenDangNhap, String matKhau, String email, String hoTen, String gioiTinh, Date ngaySinh, String anhDaiDien, Date ngayDangKy) {
