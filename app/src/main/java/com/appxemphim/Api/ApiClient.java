@@ -1,4 +1,5 @@
 package com.appxemphim.Api;
+import com.appxemphim.data.LoginRequest;
 import com.appxemphim.data.NguoiDung;
 import com.appxemphim.data.Phim;
 import com.google.gson.Gson;
@@ -9,6 +10,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
