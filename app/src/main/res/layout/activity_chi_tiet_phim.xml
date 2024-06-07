@@ -34,7 +34,7 @@
             android:layout_gravity="start"
             android:textColor="@color/light_white"
             android:layout_weight="1"
-            android:text="Lịch sử phim đã xem" />
+            android:text="Chi tiết phim" />
     </LinearLayout>
 
     <!-- Movie Poster with Overlay -->
@@ -94,7 +94,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Genre"
+            android:text="Thể loại chưa xác định"
             android:textSize="16sp"
             android:textColor="@color/white" />
 
@@ -108,7 +108,6 @@
             android:textSize="16sp"
             android:textColor="@color/white" />
     </LinearLayout>
-
     <!-- Movie Description -->
     <ScrollView
         android:id="@+id/scrollView"
@@ -120,17 +119,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/genreRatingContainer">
 
-        <TextView
-            android:id="@+id/movieDescription"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:lineSpacingExtra="4dp"
-            android:text="Movie description goes here. This is a long text describing the plot of the movie."
-            android:textColor="@color/white"
-            android:textSize="16sp" />
-    </ScrollView>
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/movieDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:lineSpacingExtra="4dp"
+                android:layout_weight="1"
+                android:text="Movie description goes here. This is a long text describing the plot of the movie."
+                android:textColor="@color/white"
+                android:maxLines="5"
+                android:ellipsize="end"
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/tvReadMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Xem thêm"
+                android:textColor="@color/light_blue"
+                android:textStyle="bold"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:visibility="gone"
+                android:layout_gravity="center_vertical" />
+            <RatingBar
+                android:id="@+id/movieRatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:numStars="5"
+                android:stepSize="1"
+                android:rating="4"
+                android:layout_gravity="center_horizontal"
+                android:progressTint="@color/yellow" />
+        </LinearLayout>
+    </ScrollView>
     <!-- Bottom Navigation Bar -->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
