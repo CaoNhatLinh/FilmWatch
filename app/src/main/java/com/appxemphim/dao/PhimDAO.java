@@ -3,7 +3,8 @@ package com.appxemphim.dao;
 
 import com.appxemphim.Api.ApiClient;
 import com.appxemphim.data.Phim;
-
+import com.appxemphim.data.TheLoai;
+import com.appxemphim.data.DanhGia;
 import java.util.List;
 
 
@@ -130,9 +131,77 @@ public class PhimDAO {
             }
         });
     }
+    public void getPhimById(int id, final PhimByIdCallback callback) {
+        Call<Phim> call = apiClient.getPhimById(id);
+        call.enqueue(new Callback<Phim>() {
+            @Override
+            public void onResponse(Call<Phim> call, Response<Phim> response) {
+                if (response.isSuccessful()) {
+                    Phim phim = response.body();
+                    callback.onSuccess(phim);
+                } else {
+                    callback.onFailure("Failed to fetch data: " + response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<Phim> call, Throwable t) {
+                callback.onFailure(t.getMessage());
+            }
+        });
+    }
+    public void getDanhGiaPhim(int phimId, final DanhGiaCallback callback) {
+        Call<List<DanhGia>> call = apiClient.getDanhGiaPhim(phimId);
+        call.enqueue(new Callback<List<DanhGia>>() {
+            @Override
+            public void onResponse(Call<List<DanhGia>> call, Response<List<DanhGia>> response) {
+                if (response.isSuccessful()) {
+                    List<DanhGia> danhGiaList = response.body();
+                    callback.onSuccess(danhGiaList);
+                } else {
+                    callback.onFailure("Failed to fetch data: " + response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<List<DanhGia>> call, Throwable t) {
+                callback.onFailure(t.getMessage());
+            }
+        });
+    }
+
+    public void getTheLoaiPhim(int phimId, final TheLoaiCallback callback) {
+        Call<List<TheLoai>> call = apiClient.getTheLoaiPhim(phimId);
+        call.enqueue(new Callback<List<TheLoai>>() {
+            @Override
+            public void onResponse(Call<List<TheLoai>> call, Response<List<TheLoai>> response) {
+                if (response.isSuccessful()) {
+                    List<TheLoai> theLoaiList = response.body();
+                    callback.onSuccess(theLoaiList);
+                } else {
+                    callback.onFailure("Failed to fetch data: " + response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<List<TheLoai>> call, Throwable t) {
+                callback.onFailure(t.getMessage());
+            }
+        });
+    }
 
     public interface PhimCallback {
         void onSuccess(List<Phim> phimList);
+        void onFailure(String message);
+    }
+    public interface PhimByIdCallback {
+        void onSuccess(Phim phim);
+        void onFailure(String message);
+    }
+    public interface DanhGiaCallback {
+        void onSuccess(List<DanhGia> danhGiaList);
+        void onFailure(String message);
+    }
+
+    public interface TheLoaiCallback {
+        void onSuccess(List<TheLoai> theLoaiList);
         void onFailure(String message);
     }
 }
