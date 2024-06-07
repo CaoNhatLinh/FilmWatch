@@ -33,6 +33,11 @@ public class ListPhimAdapter extends RecyclerView.Adapter<ListPhimAdapter.PhimIt
     }
     public void updatePhimList(List<Phim> newPhimList) {
         Phims.clear();
+//        for (Phim phim :
+//                newPhimList) {
+//            Phims.add(phim);
+//
+//        }
         Phims.addAll(newPhimList);
         notifyDataSetChanged();
     }
@@ -43,7 +48,6 @@ public class ListPhimAdapter extends RecyclerView.Adapter<ListPhimAdapter.PhimIt
 
         return new PhimItemViewHolder(itemView);
     }
-
     @Override
     public void onBindViewHolder(PhimItemViewHolder holder, int position) {
         Phim u = Phims.get(position);

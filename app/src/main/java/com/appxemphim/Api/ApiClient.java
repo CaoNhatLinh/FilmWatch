@@ -1,14 +1,18 @@
 package com.appxemphim.Api;
+import com.appxemphim.data.LoginRequest;
 import com.appxemphim.data.NguoiDung;
 import com.appxemphim.data.Phim;
+import com.appxemphim.data.TheLoai;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.appxemphim.data.DanhGia;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -54,5 +58,15 @@ public interface ApiClient {
 
     @POST("api/nguoidung/register") // Địa chỉ endpoint cho đăng ký
     Call<Void> register(@Body NguoiDung registerRequest);
+    @GET("api/phim/{id}")
+    Call<Phim> getPhimById(@Path("id") int id);
+
+    // Lấy danh sách đánh giá của phim theo ID phim
+    @GET("api/phim/{phimId}/danhgia")
+    Call<List<DanhGia>> getDanhGiaPhim(@Path("phimId") int phimId);
+
+    // Lấy danh sách thể loại của phim theo ID phim
+    @GET("api/phim/{phimId}/theloai")
+    Call<List<TheLoai>> getTheLoaiPhim(@Path("phimId") int phimId);
     }
 

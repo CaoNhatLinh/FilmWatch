@@ -38,9 +38,9 @@ public class TrangChuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (flag != homeLayout.getId()) {
-                replaceFragment(new HomeFragment());
-                setBackgroundColor(homeLayout,moviesLayout,profileLayout);
-                flag = homeLayout.getId();
+                    replaceFragment(new HomeFragment());
+                    setBackgroundColor(homeLayout,moviesLayout,profileLayout);
+                    flag = homeLayout.getId();
                 }
             }
         });
@@ -48,9 +48,9 @@ public class TrangChuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (flag != moviesLayout.getId()) {
-                replaceFragment(new ListPhimFragment());
-                setBackgroundColor(moviesLayout,profileLayout,homeLayout);
-                flag = moviesLayout.getId();
+                    replaceFragment(new ListPhimFragment());
+                    setBackgroundColor(moviesLayout,profileLayout,homeLayout);
+                    flag = moviesLayout.getId();
                 }
 
             }

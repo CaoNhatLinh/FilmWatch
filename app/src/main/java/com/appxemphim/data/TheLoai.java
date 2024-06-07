@@ -1,30 +1,27 @@
 package com.appxemphim.data;
 
 public class TheLoai {
-    private int maTheLoai;
-    private String tenTheLoai;
+    private int MaTheLoai;
+    private String TenTheLoai;
 
     public TheLoai(int maTheLoai, String tenTheLoai) {
-        this.maTheLoai = maTheLoai;
-        this.tenTheLoai = tenTheLoai;
-    }
-
-    public TheLoai() {
+        MaTheLoai = maTheLoai;
+        TenTheLoai = tenTheLoai;
     }
 
     public int getMaTheLoai() {
-        return maTheLoai;
+        return MaTheLoai;
     }
 
     public void setMaTheLoai(int maTheLoai) {
-        this.maTheLoai = maTheLoai;
+        MaTheLoai = maTheLoai;
     }
 
     public String getTenTheLoai() {
-        return tenTheLoai;
+        return TenTheLoai;
     }
 
     public void setTenTheLoai(String tenTheLoai) {
-        this.tenTheLoai = tenTheLoai;
+        TenTheLoai = tenTheLoai;
     }
 }
