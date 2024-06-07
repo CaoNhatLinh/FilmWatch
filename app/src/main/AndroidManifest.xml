@@ -34,10 +34,10 @@
             android:name=".activities.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.LoginActivity"
+            android:name=".activities.TrangChuActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.TrangChuActivity"
+            android:name=".activities.LoginActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
