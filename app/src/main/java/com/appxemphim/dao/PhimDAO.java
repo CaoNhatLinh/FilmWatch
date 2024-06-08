@@ -2,11 +2,8 @@
 package com.appxemphim.dao;
 
 import com.appxemphim.Api.ApiClient;
-<<<<<<< HEAD
 import com.appxemphim.data.BinhLuan;
-=======
 import com.appxemphim.Api.ApiType;
->>>>>>> b4d9e7c5abc072005f96688bfebc6ce9511cfa39
 import com.appxemphim.data.Phim;
 import com.appxemphim.data.TheLoai;
 import com.appxemphim.data.DanhGia;
@@ -233,29 +230,6 @@ public class PhimDAO {
                 callback.onFailure(t.getMessage());
             }
         });
-    }
-    public void sendBinhLuanPhim(int maPhim, int maNguoiDung, String noiDung, SendBinhLuanCallback callback) {
-        Call<Void> call = apiClient.sendBinhLuanPhim(maPhim, maNguoiDung, noiDung);
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    callback.onSuccess();
-                } else {
-                    callback.onFailure("Không thể gửi bình luận. Thử lại sau.");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                callback.onFailure("Lỗi: " + t.getMessage());
-            }
-        });
-    }
-    public interface SendBinhLuanCallback {
-        void onSuccess();
-
-        void onFailure(String error);
     }
     public interface BinhLuanCallback {
         void onSuccess(List<BinhLuan> binhLuanList);
