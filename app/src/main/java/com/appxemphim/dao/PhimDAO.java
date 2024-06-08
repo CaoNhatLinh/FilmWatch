@@ -93,8 +93,8 @@ public class PhimDAO {
             }
         });
     }
-    public void getListPhimAuMyHot(final PhimCallback callback) {
-        Call<List<Phim>> call = apiClient.getListPhimAuMyHot();
+    public void getListPhimHanHot(final PhimCallback callback) {
+        Call<List<Phim>> call = apiClient.getListPhimHanHot();
         call.enqueue(new Callback<List<Phim>>() {
             @Override
             public void onResponse(Call<List<Phim>> call, Response<List<Phim>> response) {
@@ -111,8 +111,42 @@ public class PhimDAO {
             }
         });
     }
-
-
+    public void getTopAnime(final PhimCallback callback) {
+        Call<List<Phim>> call = apiClient.getListTopAnime();
+        call.enqueue(new Callback<List<Phim>>() {
+            @Override
+            public void onResponse(Call<List<Phim>> call, Response<List<Phim>> response) {
+                if (response.isSuccessful()) {
+                    List<Phim> phimList = response.body();
+                    callback.onSuccess(phimList);
+                } else {
+                    callback.onFailure("Failed to fetch data: " + response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<List<Phim>> call, Throwable t) {
+                callback.onFailure(t.getMessage());
+            }
+        });
+    }
+    public void getTopLove(final PhimCallback callback) {
+        Call<List<Phim>> call = apiClient.getListTopLove();
+        call.enqueue(new Callback<List<Phim>>() {
+            @Override
+            public void onResponse(Call<List<Phim>> call, Response<List<Phim>> response) {
+                if (response.isSuccessful()) {
+                    List<Phim> phimList = response.body();
+                    callback.onSuccess(phimList);
+                } else {
+                    callback.onFailure("Failed to fetch data: " + response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<List<Phim>> call, Throwable t) {
+                callback.onFailure(t.getMessage());
+            }
+        });
+    }
     public void getListPhimDaXem(final PhimCallback callback) {
         Call<List<Phim>> call = apiClient.getListPhimDaXem();
         call.enqueue(new Callback<List<Phim>>() {

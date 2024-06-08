@@ -43,6 +43,7 @@
             android:layout_marginEnd="24dp"
             android:hint="Email hoặc Tên đăng nhập"
             android:textColorHint="@color/gray"
+            android:textColor="@color/light_white"
             android:inputType="textEmailAddress"
             android:minHeight="48dp"
             tools:ignore="SpeakableTextPresentCheck" />
@@ -57,6 +58,8 @@
             android:layout_marginEnd="24dp"
             android:hint="Mật khẩu"
             android:textColorHint="@color/gray"
+            android:textColor="@color/light_white"
+
             android:inputType="textPassword"
             android:minHeight="48dp"
             tools:ignore="SpeakableTextPresentCheck" />

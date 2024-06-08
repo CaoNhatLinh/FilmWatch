@@ -36,15 +36,18 @@ public interface ApiClient {
     Call<List<Phim>> getListPhim();
     @GET("api/phim/banner")
     Call<List<Phim>> getListBanner();
-    @GET("api/phim/banner")
+    @GET("api/phim/phimmoi")
     Call<List<Phim>> getListPhimMoi();
-    @GET("api/phim/banner")
+    @GET("api/phim/china/top")
     Call<List<Phim>> getListPhimTrungQuocHot();
-    @GET("api/phim/banner")
-    Call<List<Phim>> getListPhimAuMyHot();
+    @GET("api/phim/korea/top")
+    Call<List<Phim>> getListPhimHanHot();
     @GET("api/phim/banner")
     Call<List<Phim>> getListPhimDaXem();
-
+    @GET("api/phim/anime/top")
+    Call<List<Phim>> getListTopAnime();
+    @GET("api/phim/love/top")
+    Call<List<Phim>> getListTopLove();
     //Nguoi dung
     @GET("api/nguoidung/{id}")
     Call<NguoiDung> getProfileById(@Path("id") int MaNguoiDung);

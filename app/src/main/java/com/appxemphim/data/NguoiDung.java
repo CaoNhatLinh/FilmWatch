@@ -102,6 +102,7 @@ public class NguoiDung {
         NgaySinh = ngaySinh;
         AnhDaiDien = anhDaiDien;
         NgayDangKy = ngayDangKy;
+
     }
 
     private String GioiTinh;

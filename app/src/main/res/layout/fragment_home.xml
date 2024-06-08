@@ -171,6 +171,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
+                        android:minHeight="192dp"
                         android:scrollbars="horizontal" />
                 </LinearLayout>
                 <LinearLayout
@@ -219,6 +220,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
+                        android:minHeight="192dp"
                         android:scrollbars="horizontal" />
                 </LinearLayout>
                 <LinearLayout
@@ -245,7 +247,7 @@
                             android:layout_gravity="start"
                             android:textColor="@color/light_white"
                             android:layout_weight="1"
-                            android:text="Phim Âu Mỹ HOT" />
+                            android:text="Phim Hàn HOT" />
 
                         <Button
                             android:id="@+id/btnMoreAuMy"
@@ -263,10 +265,109 @@
                     </LinearLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvAuMyHot"
+                        android:id="@+id/rvHanHot"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
+                        android:minHeight="192dp"
+                        android:scrollbars="horizontal" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="15dp"
+                    android:layout_marginTop="15dp"
+                    android:textAllCaps="false"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:textAllCaps="false">
+
+                        <TextView
+                            android:id="@+id/textView10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="48dp"
+                            android:textStyle="bold"
+                            android:textSize="20dp"
+                            android:gravity="center_vertical"
+                            android:layout_gravity="start"
+                            android:textColor="@color/light_white"
+                            android:layout_weight="1"
+                            android:text="Phim tâm lý tình cảm" />
+
+                        <Button
+                            android:id="@+id/btnMoreLove"
+                            android:layout_width="wrap_content"
+                            android:layout_height="48dp"
+                            android:background="@android:color/transparent"
+                            android:text="Xem thêm"
+                            android:drawableEnd="@drawable/arrowright_small"
+                            android:layout_gravity="end"
+                            android:layout_weight="0"
+                            android:textAllCaps="false"
+                            android:textColor="@color/light_white"
+                            android:textSize="14sp"/>
+
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvLove"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:minHeight="192dp"
+                        android:scrollbars="horizontal" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="15dp"
+                    android:layout_marginTop="15dp"
+                    android:textAllCaps="false"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:textAllCaps="false">
+
+                        <TextView
+                            android:id="@+id/textView11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="48dp"
+                            android:textStyle="bold"
+                            android:textSize="20dp"
+                            android:gravity="center_vertical"
+                            android:layout_gravity="start"
+                            android:textColor="@color/light_white"
+                            android:layout_weight="1"
+                            android:text="Anime" />
+
+                        <Button
+                            android:id="@+id/btnMoreAnime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="48dp"
+                            android:background="@android:color/transparent"
+                            android:text="Xem thêm"
+                            android:drawableEnd="@drawable/arrowright_small"
+                            android:layout_gravity="end"
+                            android:layout_weight="0"
+                            android:textAllCaps="false"
+                            android:textColor="@color/light_white"
+                            android:textSize="14sp"/>
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvAnime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:minHeight="192dp"
                         android:scrollbars="horizontal" />
                 </LinearLayout>
             </LinearLayout>

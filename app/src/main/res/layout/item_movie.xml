@@ -9,13 +9,13 @@
 
     <ImageView
         android:id="@+id/imageViewPoster"
-        android:layout_width="112dp"
+        android:layout_width="115dp"
         android:layout_height="168dp"
         android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/textViewTitle"
-        android:layout_width="112dp"
+        android:layout_width="115dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="Movie Title"
