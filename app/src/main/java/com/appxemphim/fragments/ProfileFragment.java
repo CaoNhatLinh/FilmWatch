@@ -47,25 +47,29 @@ public class ProfileFragment extends Fragment {
     {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         tvName = view.findViewById(R.id.tvName);
-        gotoHistoryMoivesActivity(view);
-        gotoProfileDetailsActivity(view);
+
+        int id= 2;
+        //Bundle bundle = getArguments();
+//        if (bundle != null) {
+//            id = bundle.getInt("MaNguoiDung");
+//            getProfileById(data);
+//        }
+        gotoHistoryMoivesActivity(view,id);
+        gotoProfileDetailsActivity(view,id);
         nguoiDungDAO = new NguoiDungDAO();
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            int data = bundle.getInt("MaNguoiDung");
-            getProfileById(data);
-        }
+
+        getProfileById(id);
         return view;
     }
 
-    public void gotoHistoryMoivesActivity(View view)
+    public void gotoHistoryMoivesActivity(View view,int id)
     {
         btnHistoryMoives = view.findViewById(R.id.btnHistoryMovies);
         btnHistoryMoives.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), HistoryMovieActivity.class);
-
+                intent.putExtra("MaNguoiDung", id);
                 startActivity(intent);
             }
         });
@@ -89,13 +93,14 @@ public class ProfileFragment extends Fragment {
             }
         });
     }
-    public void gotoProfileDetailsActivity(View view)
+    public void gotoProfileDetailsActivity(View view,int id)
     {
         btnProfileDetails = view.findViewById(R.id.btnProfileDetails);
         btnProfileDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ProfileDetailActivity.class);
+                intent.putExtra("MaNguoiDung", id);
                 startActivity(intent);
             }
         });

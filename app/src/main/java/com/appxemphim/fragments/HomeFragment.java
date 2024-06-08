@@ -11,10 +11,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.appxemphim.Api.ApiType;
 import com.appxemphim.R;
 import com.appxemphim.Utils.ItemClickSupport;
+import com.appxemphim.Utils.Utils;
 import com.appxemphim.activities.ChiTietPhimActivity;
+import com.appxemphim.activities.SharedListPhimActivity;
 import com.appxemphim.adapters.BannerAdapter;
 import com.appxemphim.adapters.ListPhimAdapter;
 import com.appxemphim.dao.PhimDAO;
@@ -26,20 +30,11 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-    private RecyclerView rvBanner;
-    private RecyclerView rvPhimMoi;
-    private RecyclerView rvPhimTrungQuocHot;
-    private RecyclerView rvPhimHanHot;
-    private RecyclerView rvLove;
-    private RecyclerView rvAnime;
+    private RecyclerView rvBanner,rvPhimMoi,rvPhimTrungQuocHot,rvPhimHanHot,rvLove,rvAnime;
     private PhimDAO phimDAO;
     private BannerAdapter posterAdapter;
-    private ListPhimAdapter phimMoiAdapter;
-    private ListPhimAdapter phimTrungQuocHotAdapter;
-    private ListPhimAdapter phimHanHotAdapter;
-    private ListPhimAdapter loveAdapter;
-    private ListPhimAdapter animeAdapter;
-
+    private ListPhimAdapter phimMoiAdapter,phimTrungQuocHotAdapter,phimHanHotAdapter,loveAdapter,animeAdapter;
+    private Button btnChina,btnKorea,btnLove,btnAnime;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -71,6 +66,10 @@ public class HomeFragment extends Fragment {
         rvPhimHanHot = view.findViewById(R.id.rvHanHot);
         rvLove = view.findViewById(R.id.rvLove);
         rvAnime = view.findViewById(R.id.rvAnime);
+        btnChina = view.findViewById(R.id.btnMoreTrungQuoc);
+        btnKorea = view.findViewById(R.id.btnMoreKorea);
+        btnAnime = view.findViewById(R.id.btnMoreAnime);
+        btnLove = view.findViewById(R.id.btnMoreLove);
     }
     private ListPhimAdapter createPhimAdapter() {
         return new ListPhimAdapter(getContext(), new ArrayList<>());
@@ -80,15 +79,18 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         findview(view);
         HorizontalLayoutManager();
+        phimDAO = new PhimDAO();
+
         posterAdapter = new BannerAdapter(getContext(),new ArrayList<>());
         rvBanner.setAdapter(posterAdapter);
+
+
         phimMoiAdapter = createPhimAdapter();
         phimTrungQuocHotAdapter = createPhimAdapter();
         phimHanHotAdapter = createPhimAdapter();
         loveAdapter = createPhimAdapter();
         animeAdapter = createPhimAdapter();
-        phimDAO = new PhimDAO();
-
+        //set adapter
         rvPhimMoi.setAdapter(phimMoiAdapter);
         rvPhimTrungQuocHot.setAdapter(phimTrungQuocHotAdapter);
         rvPhimHanHot.setAdapter(phimHanHotAdapter);
@@ -104,15 +106,30 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         loadList();
+        click();
+        btnMore();
+    }
+    private void openSharedActivity(String title, ArrayList<Phim> data) {
+        Intent intent = new Intent(getActivity(), SharedListPhimActivity.class);
+        intent.putExtra("title", title);
+        intent.putExtra("data", data);
+        startActivity(intent);
     }
     public void loadList()
     {
         loadBanner();
-        loadPhimMoi();
-        loadPhimHanHot();
-        loadPhimTrungQuocHot();
-        loadTopAnime();
-        loadTopPhimLove();
+        loadPhim(ApiType.PHIM_MOI, phimMoiAdapter);
+        loadPhim(ApiType.TOP_PHIM_TRUNG_QUOC, phimTrungQuocHotAdapter);
+        loadPhim(ApiType.TOP_PHIM_HAN, phimHanHotAdapter);
+        loadPhim(ApiType.TOP_ANIME, animeAdapter);
+        loadPhim(ApiType.TOP_LOVE, loveAdapter);
+    }
+    public void btnMore()
+    {
+        buttonshare(ApiType.TOP_PHIM_TRUNG_QUOC,btnChina,"Danh Sách Phim Trung Quốc");
+        buttonshare(ApiType.TOP_PHIM_HAN,btnKorea,"Danh Sách Phim Hàn Quốc");
+        buttonshare(ApiType.LOVE,btnLove,"Danh Sách Tình cảm - Lãng Mãn");
+        buttonshare(ApiType.ANIME,btnAnime,"Danh Sách Phim Anime");
     }
     private void loadBanner() {
 
@@ -138,124 +155,44 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-
-    private void loadPhimMoi() {
-
-        phimDAO.getListPhimMoi(new PhimDAO.PhimCallback() {
+    private void loadPhim(ApiType apiType, final ListPhimAdapter adapter) {
+        phimDAO.fetchPhimList(apiType, new PhimDAO.PhimCallback() {
             @Override
             public void onSuccess(List<Phim> phimList) {
-                phimMoiAdapter.updatePhimList(phimList);
+                adapter.updatePhimList(phimList);
             }
 
             @Override
             public void onFailure(String message) {
-                Log.e("PhimFragment", "Failed to fetch data: " + message);
-            }
-        });
-        ItemClickSupport.addTo(rvPhimMoi).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-            @Override
-            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                // Handle item click here
-                Phim phim = phimMoiAdapter.getPhimAtPosition(position);
-                Intent intent = new Intent(getActivity(), ChiTietPhimActivity.class);
-                intent.putExtra("MaPhim", phim.getMaPhim());
-                startActivity(intent);
+                Log.e("MainActivity", "Failed to fetch data: " + message);
             }
         });
     }
-    private void loadPhimHanHot() {
-
-        phimDAO.getListPhimHanHot(new PhimDAO.PhimCallback() {
-            @Override
-            public void onSuccess(List<Phim> phimList) {
-                phimHanHotAdapter.updatePhimList(phimList);
-            }
-
-            @Override
-            public void onFailure(String message) {
-                Log.e("PhimFragment", "Failed to fetch data: " + message);
-            }
-        });
-        ItemClickSupport.addTo(rvPhimHanHot).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-            @Override
-            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                // Handle item click here
-                Phim phim = posterAdapter.getPhimAtPosition(position);
-                Intent intent = new Intent(getActivity(), ChiTietPhimActivity.class);
-                intent.putExtra("MaPhim", phim.getMaPhim());
-                startActivity(intent);
-            }
-        });
+    public void click()
+    {
+        Utils.setupRecyclerViewClickListener(getActivity(), rvPhimHanHot, phimHanHotAdapter, ChiTietPhimActivity.class);
+        Utils.setupRecyclerViewClickListener(getActivity(), rvPhimTrungQuocHot, phimTrungQuocHotAdapter, ChiTietPhimActivity.class);
+        Utils.setupRecyclerViewClickListener(getActivity(), rvAnime, animeAdapter, ChiTietPhimActivity.class);
+        Utils.setupRecyclerViewClickListener(getActivity(), rvLove, loveAdapter, ChiTietPhimActivity.class);
+        Utils.setupRecyclerViewClickListener(getActivity(), rvPhimMoi, phimMoiAdapter, ChiTietPhimActivity.class);
     }
-    private void loadPhimTrungQuocHot() {
 
-        phimDAO.getListPhimTrungQuocHot(new PhimDAO.PhimCallback() {
+    public void buttonshare(ApiType apiType,Button btn,String title)
+    {
+        btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSuccess(List<Phim> phimList) {
-                phimTrungQuocHotAdapter.updatePhimList(phimList);
-            }
-
-            @Override
-            public void onFailure(String message) {
-                Log.e("PhimFragment", "Failed to fetch data: " + message);
-            }
-        });
-        ItemClickSupport.addTo(rvPhimTrungQuocHot).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-            @Override
-            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                // Handle item click here
-                Phim phim = phimTrungQuocHotAdapter.getPhimAtPosition(position);
-                Intent intent = new Intent(getActivity(), ChiTietPhimActivity.class);
-                intent.putExtra("MaPhim", phim.getMaPhim());
-                startActivity(intent);
-            }
-        });
-    }
-    private void loadTopPhimLove() {
-
-        phimDAO.getTopLove(new PhimDAO.PhimCallback() {
-            @Override
-            public void onSuccess(List<Phim> phimList) {
-                loveAdapter.updatePhimList(phimList);
-            }
-
-            @Override
-            public void onFailure(String message) {
-                Log.e("PhimFragment", "Failed to fetch data: " + message);
-            }
-        });
-        ItemClickSupport.addTo(rvLove).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-            @Override
-            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                // Handle item click here
-                Phim phim = loveAdapter.getPhimAtPosition(position);
-                Intent intent = new Intent(getActivity(), ChiTietPhimActivity.class);
-                intent.putExtra("MaPhim", phim.getMaPhim());
-                startActivity(intent);
-            }
-        });
-    }
-    private void loadTopAnime() {
-
-        phimDAO.getTopAnime(new PhimDAO.PhimCallback() {
-            @Override
-            public void onSuccess(List<Phim> phimList) {
-                animeAdapter.updatePhimList(phimList);
-            }
-
-            @Override
-            public void onFailure(String message) {
-                Log.e("PhimFragment", "Failed to fetch data: " + message);
-            }
-        });
-        ItemClickSupport.addTo(rvAnime).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-            @Override
-            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                // Handle item click here
-                Phim phim = animeAdapter.getPhimAtPosition(position);
-                Intent intent = new Intent(getActivity(), ChiTietPhimActivity.class);
-                intent.putExtra("MaPhim", phim.getMaPhim());
-                startActivity(intent);
+            public void onClick(View v) {
+                phimDAO.fetchPhimList(apiType, new PhimDAO.PhimCallback() {
+                    @Override
+                    public void onSuccess(List<Phim> phimList) {
+                        ArrayList<Phim> listPhim = new ArrayList<>(phimList);
+                        openSharedActivity(title, listPhim);
+                    }
+                    @Override
+                    public void onFailure(String message) {
+                        Log.e("PhimFragment", "Failed to fetch data: " + message);
+                    }
+                });
             }
         });
     }
