@@ -2,9 +2,12 @@
 package com.appxemphim.dao;
 
 import com.appxemphim.Api.ApiClient;
+import com.appxemphim.data.BinhLuan;
 import com.appxemphim.data.Phim;
 import com.appxemphim.data.TheLoai;
 import com.appxemphim.data.DanhGia;
+
+import java.util.Date;
 import java.util.List;
 
 
@@ -220,6 +223,89 @@ public class PhimDAO {
             }
         });
     }
+    public void sendDanhGiaPhim(int maPhim, int maNguoiDung, float rating, SendDanhGiaCallback callback) {
+        DanhGia danhGia = new DanhGia(0, maNguoiDung, maPhim, rating, new Date());
+        Call<Void> call = apiClient.sendDanhGiaPhim(maPhim, danhGia);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess();
+                } else {
+                    callback.onFailure("Server returned: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                callback.onFailure(t.getMessage());
+            }
+        });
+    }
+    public void updateDanhGiaPhim(int maPhim, int maNguoiDung, float rating, final UpdateDanhGiaCallback callback) {
+        DanhGia danhGia = new DanhGia(0, maNguoiDung, maPhim, rating, new Date());
+        Call<Void> call = apiClient.updateDanhGiaPhim(maPhim, maNguoiDung, danhGia);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess();
+                } else {
+                    callback.onFailure("Server returned: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                callback.onFailure(t.getMessage());
+            }
+        });
+    }
+    public void getBinhLuanPhim(int phimId, final BinhLuanCallback callback) {
+        Call<List<BinhLuan>> call = apiClient.getBinhLuanPhim(phimId);
+        call.enqueue(new Callback<List<BinhLuan>>() {
+            @Override
+            public void onResponse(Call<List<BinhLuan>> call, Response<List<BinhLuan>> response) {
+                if (response.isSuccessful()) {
+                    List<BinhLuan> binhLuanList = response.body();
+                    callback.onSuccess(binhLuanList);
+                } else {
+                    callback.onFailure("Failed to fetch data: " + response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<List<BinhLuan>> call, Throwable t) {
+                callback.onFailure(t.getMessage());
+            }
+        });
+    }
+    public void sendBinhLuanPhim(int maPhim, int maNguoiDung, String noiDung, SendBinhLuanCallback callback) {
+        Call<Void> call = apiClient.sendBinhLuanPhim(maPhim, maNguoiDung, noiDung);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess();
+                } else {
+                    callback.onFailure("Không thể gửi bình luận. Thử lại sau.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                callback.onFailure("Lỗi: " + t.getMessage());
+            }
+        });
+    }
+    public interface SendBinhLuanCallback {
+        void onSuccess();
+
+        void onFailure(String error);
+    }
+    public interface BinhLuanCallback {
+        void onSuccess(List<BinhLuan> binhLuanList);
+        void onFailure(String message);
+    }
 
     public interface PhimCallback {
         void onSuccess(List<Phim> phimList);
@@ -237,6 +323,14 @@ public class PhimDAO {
     public interface TheLoaiCallback {
         void onSuccess(List<TheLoai> theLoaiList);
         void onFailure(String message);
+    }
+    public interface SendDanhGiaCallback {
+        void onSuccess();
+        void onFailure(String error);
+    }
+    public interface UpdateDanhGiaCallback {
+        void onSuccess();
+        void onFailure(String error);
     }
 }
 

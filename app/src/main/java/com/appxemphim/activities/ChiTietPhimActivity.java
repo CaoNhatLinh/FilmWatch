@@ -2,9 +2,12 @@ package com.appxemphim.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,27 +24,32 @@ import java.util.Locale;
 
 public class ChiTietPhimActivity extends AppCompatActivity {
     private ImageView posterImageView;
-    private TextView titleTextView, genreTextView, ratingTextView, descriptionTextView;
+    private TextView titleTextView, genreTextView, ratingTextView, descriptionTextView, tvReadMore;
     private boolean isExpanded = false;
     private String initialDescription;
+    private RatingBar movieRatingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chi_tiet_phim);
+
         // Ánh xạ view từ layout
         titleTextView = findViewById(R.id.movieTitle);
         descriptionTextView = findViewById(R.id.movieDescription);
         posterImageView = findViewById(R.id.moviePoster);
         genreTextView = findViewById(R.id.movieGenre);
         ratingTextView = findViewById(R.id.movieRating);
+        movieRatingBar = findViewById(R.id.movieRatingBar);
+
         int maPhim = getIntent().getIntExtra("MaPhim", -1);
         if (maPhim != -1) {
             fetchPhimDetails(maPhim);
         } else {
             Toast.makeText(this, "Không tìm thấy mã phim", Toast.LENGTH_SHORT).show();
         }
-        TextView tvReadMore = findViewById(R.id.tvReadMore);
+
+        tvReadMore = findViewById(R.id.tvReadMore);
         ScrollView scrollView = findViewById(R.id.scrollView);
         initialDescription = descriptionTextView.getText().toString();
         if (initialDescription.length() > 5) {
@@ -68,14 +76,103 @@ public class ChiTietPhimActivity extends AppCompatActivity {
             });
         }
 
+        movieRatingBar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
+            if (fromUser) {
+                int maNguoiDung = getCurrentUserID();
+                if (maNguoiDung != -1) {
+                    checkAndSendRatingToServer(maPhim, rating);
+                }
+            }
+        });
     }
+
+    private int getCurrentUserID() {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        return sharedPreferences.getInt("userId", -1);
+    }
+
+    private void checkAndSendRatingToServer(int maPhim, float rating) {
+        int maNguoiDung = getCurrentUserID();
+        if (maNguoiDung == -1) {
+            Toast.makeText(this, "Không thể lấy mã người dùng. Vui lòng đăng nhập lại.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        PhimDAO phimDAO = new PhimDAO();
+        phimDAO.getDanhGiaPhim(maPhim, new PhimDAO.DanhGiaCallback() {
+            @Override
+            public void onSuccess(List<DanhGia> danhGiaList) {
+                if (!danhGiaList.isEmpty()) {
+                    updateRatingOnServer(maPhim, maNguoiDung, rating);
+                } else {
+                    sendRatingToServer(maPhim, maNguoiDung, rating);
+                }
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Toast.makeText(ChiTietPhimActivity.this, "Lỗi: " + error, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void updateRatingOnServer(int maPhim, int maNguoiDung, float rating) {
+        PhimDAO phimDAO = new PhimDAO();
+        phimDAO.updateDanhGiaPhim(maPhim, maNguoiDung, rating, new PhimDAO.UpdateDanhGiaCallback() {
+            @Override
+            public void onSuccess() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(ChiTietPhimActivity.this, "Đã cập nhật đánh giá thành công", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(String error) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(ChiTietPhimActivity.this, "Lỗi khi cập nhật đánh giá: " + error, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+    }
+
+    private void sendRatingToServer(int maPhim, int maNguoiDung, float rating) {
+        PhimDAO phimDAO = new PhimDAO();
+        phimDAO.sendDanhGiaPhim(maPhim, maNguoiDung, rating, new PhimDAO.SendDanhGiaCallback() {
+            @Override
+            public void onSuccess() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(ChiTietPhimActivity.this, "Đã gửi đánh giá thành công", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(String error) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(ChiTietPhimActivity.this, "Lỗi khi gửi đánh giá: " + error, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+    }
+
     @Override
     public void onResume() {
         super.onResume();
-        back();
+        setupBackButton();
     }
-    public void back()
-    {
+
+    private void setupBackButton() {
         ImageView back = findViewById(R.id.ivBack);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +181,7 @@ public class ChiTietPhimActivity extends AppCompatActivity {
             }
         });
     }
+
     private void fetchPhimDetails(int maPhim) {
         PhimDAO phimDAO = new PhimDAO();
         phimDAO.getPhimById(maPhim, new PhimDAO.PhimByIdCallback() {
@@ -91,8 +189,14 @@ public class ChiTietPhimActivity extends AppCompatActivity {
             public void onSuccess(Phim phim) {
                 titleTextView.setText(phim.getTieuDe());
                 descriptionTextView.setText(phim.getMoTa());
-                Glide.with(ChiTietPhimActivity.this).load(phim.getAnhBia()).into(posterImageView);
-
+                Glide.with(ChiTietPhimActivity.this).load(phim.getBanner()).into(posterImageView);
+                if (phim.getMoTa() == null || phim.getMoTa().isEmpty()) {
+                    tvReadMore.setVisibility(View.GONE);
+                    descriptionTextView.setText("Không có mô tả cho phim này.");
+                } else {
+                    descriptionTextView.setText(phim.getMoTa());
+                    tvReadMore.setVisibility(View.VISIBLE);
+                }
                 fetchTheLoaiPhim(phim.getMaPhim());
                 fetchDanhGiaPhim(phim.getMaPhim());
             }
@@ -127,6 +231,7 @@ public class ChiTietPhimActivity extends AppCompatActivity {
             }
         });
     }
+
     private void fetchDanhGiaPhim(int maPhim) {
         PhimDAO phimDAO = new PhimDAO();
         phimDAO.getDanhGiaPhim(maPhim, new PhimDAO.DanhGiaCallback() {
@@ -138,7 +243,8 @@ public class ChiTietPhimActivity extends AppCompatActivity {
                         averageRating += danhGia.getDanhGia();
                     }
                     averageRating /= danhGiaList.size();
-                    ratingTextView.setText("Đánh giá: "+ String.valueOf(averageRating)+"/10");
+                    ratingTextView.setText("Đánh giá: " + String.format(Locale.getDefault(), "%.1f", averageRating) + "/10");
+                    movieRatingBar.setRating((float) averageRating);
                 } else {
                     ratingTextView.setText("Chưa có đánh giá");
                 }
@@ -146,7 +252,6 @@ public class ChiTietPhimActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(String error) {
-//              Toast.makeText(ChiTietPhimActivity.this, "Không thể lấy đánh giá phim", Toast.LENGTH_SHORT).show();
                 Toast.makeText(ChiTietPhimActivity.this, "Lỗi: " + error, Toast.LENGTH_SHORT).show();
             }
         });

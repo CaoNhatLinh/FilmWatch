@@ -1,4 +1,5 @@
 package com.appxemphim.Api;
+import com.appxemphim.data.BinhLuan;
 import com.appxemphim.data.LoginRequest;
 import com.appxemphim.data.NguoiDung;
 import com.appxemphim.data.Phim;
@@ -14,6 +15,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.POST;
@@ -71,5 +73,13 @@ public interface ApiClient {
     // Lấy danh sách thể loại của phim theo ID phim
     @GET("api/phim/{phimId}/theloai")
     Call<List<TheLoai>> getTheLoaiPhim(@Path("phimId") int phimId);
-    }
+    @POST("api/phim/{phimId}/danhgia")
+    Call<Void> sendDanhGiaPhim(@Path("phimId") int phimId, @Body DanhGia danhGia);
+    @PUT("api/phim/{phimId}/danhgia/{userId}")
+    Call<Void> updateDanhGiaPhim(@Path("phimId") int phimId, @Path("userId") int userId, @Body DanhGia danhGia);
+    @GET("api/phim/{phimId}/comments")
+    Call<List<BinhLuan>> getBinhLuanPhim(@Path("phimId") int phimId);
+    @POST("api/phim/{phimId}/comments")
+    Call<Void> sendBinhLuanPhim(@Path("phimId") int phimId, @Body BinhLuan binhLuan);
+}
 
