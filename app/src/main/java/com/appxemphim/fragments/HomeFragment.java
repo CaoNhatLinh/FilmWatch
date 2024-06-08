@@ -156,7 +156,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                 // Handle item click here
-                Phim phim = posterAdapter.getPhimAtPosition(position);
+                Phim phim = phimMoiAdapter.getPhimAtPosition(position);
                 Intent intent = new Intent(getActivity(), ChiTietPhimActivity.class);
                 intent.putExtra("MaPhim", phim.getMaPhim());
                 startActivity(intent);
