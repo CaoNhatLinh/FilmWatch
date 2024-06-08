@@ -3,7 +3,9 @@ package com.appxemphim.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,12 +22,13 @@ import java.util.Locale;
 public class ChiTietPhimActivity extends AppCompatActivity {
     private ImageView posterImageView;
     private TextView titleTextView, genreTextView, ratingTextView, descriptionTextView;
+    private boolean isExpanded = false;
+    private String initialDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chi_tiet_phim);
-
         // Ánh xạ view từ layout
         titleTextView = findViewById(R.id.movieTitle);
         descriptionTextView = findViewById(R.id.movieDescription);
@@ -38,6 +41,48 @@ public class ChiTietPhimActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Không tìm thấy mã phim", Toast.LENGTH_SHORT).show();
         }
+        TextView tvReadMore = findViewById(R.id.tvReadMore);
+        ScrollView scrollView = findViewById(R.id.scrollView);
+        initialDescription = descriptionTextView.getText().toString();
+        if (initialDescription.length() > 5) {
+            tvReadMore.setVisibility(View.VISIBLE);
+
+            tvReadMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Nếu mô tả đã mở rộng, thu gọn lại
+                    if (isExpanded) {
+                        // Thu gọn mô tả
+                        descriptionTextView.setText(initialDescription);
+                        descriptionTextView.setMaxLines(5);
+                        tvReadMore.setText("Xem thêm");
+                        isExpanded = false;
+                    } else {
+                        descriptionTextView.setMaxLines(Integer.MAX_VALUE);
+                        tvReadMore.setText("Thu gọn");
+                        isExpanded = true;
+                    }
+                    initialDescription = descriptionTextView.getText().toString();
+                    scrollView.fullScroll(View.FOCUS_DOWN);
+                }
+            });
+        }
+
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        back();
+    }
+    public void back()
+    {
+        ImageView back = findViewById(R.id.ivBack);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
     private void fetchPhimDetails(int maPhim) {
         PhimDAO phimDAO = new PhimDAO();
@@ -101,7 +146,7 @@ public class ChiTietPhimActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(String error) {
-//                Toast.makeText(ChiTietPhimActivity.this, "Không thể lấy đánh giá phim", Toast.LENGTH_SHORT).show();
+//              Toast.makeText(ChiTietPhimActivity.this, "Không thể lấy đánh giá phim", Toast.LENGTH_SHORT).show();
                 Toast.makeText(ChiTietPhimActivity.this, "Lỗi: " + error, Toast.LENGTH_SHORT).show();
             }
         });
