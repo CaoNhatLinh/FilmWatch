@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ public class ListPhimAdapter extends RecyclerView.Adapter<ListPhimAdapter.PhimIt
     private List<Phim> Phims;
     private Context context;
 
+
     public ListPhimAdapter( Context c,List<Phim> Phims) {
         this.Phims = Phims;
         this.context = c;
@@ -33,11 +35,7 @@ public class ListPhimAdapter extends RecyclerView.Adapter<ListPhimAdapter.PhimIt
     }
     public void updatePhimList(List<Phim> newPhimList) {
         Phims.clear();
-//        for (Phim phim :
-//                newPhimList) {
-//            Phims.add(phim);
-//
-//        }
+
         Phims.addAll(newPhimList);
         notifyDataSetChanged();
     }
@@ -55,7 +53,7 @@ public class ListPhimAdapter extends RecyclerView.Adapter<ListPhimAdapter.PhimIt
                 .load(u.getAnhBia())
                 .into(holder.ivPhim);
 
-        holder.TitlePhim.setText(CapitalizeWords.capitalizeWords(u.getTieuDe()));
+        holder.TitlePhim.setText(CapitalizeWords.capitalizeWords(shortenToTenWords(u.getTieuDe())));
     }
     public Phim getPhimAtPosition(int position) {
         return Phims.get(position);
@@ -70,4 +68,21 @@ public class ListPhimAdapter extends RecyclerView.Adapter<ListPhimAdapter.PhimIt
             ivPhim = (ImageView) itemView.findViewById(R.id.imageViewPoster);
         }
     }
+    public static String shortenToTenWords(String input) {
+        String[] words = input.split("\\s+");
+        if (words.length <= 6) {
+            return input;
+        }
+        StringBuilder shortenedString = new StringBuilder();
+        for (int i = 0; i < 6; i++) {
+            shortenedString.append(words[i]);
+            if (i < 5) {
+                shortenedString.append(" ");
+            }
+        }
+        shortenedString.append("...");
+        return shortenedString.toString();
+    }
+
+
 }

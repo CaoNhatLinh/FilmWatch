@@ -10,8 +10,11 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.appxemphim.Api.ApiType;
 import com.appxemphim.R;
 import com.appxemphim.Utils.ItemClickSupport;
+import com.appxemphim.Utils.Utils;
 import com.appxemphim.activities.ChiTietPhimActivity;
 import com.appxemphim.adapters.ListPhimAdapter;
 import com.appxemphim.dao.PhimDAO;
@@ -30,50 +33,38 @@ public class ListPhimFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_phim, container, false);
+        phimDAO = new PhimDAO();
         recyclerView = view.findViewById(R.id.recyclerViewListPhim);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3)); // 3 columns
-        phimDAO = new PhimDAO();
         phimAdapter = new ListPhimAdapter(getContext(),new ArrayList<>());
         recyclerView.setAdapter(phimAdapter);
-        ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-            @Override
-            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                // Handle item click here
-                Phim phim = phimAdapter.getPhimAtPosition(position);
-                Intent intent = new Intent(getActivity(), ChiTietPhimActivity.class);
-                intent.putExtra("MaPhim", phim.getMaPhim());
-                startActivity(intent);
-            }
-        });
+        Utils.setupRecyclerViewClickListener(getActivity(), recyclerView, phimAdapter, ChiTietPhimActivity.class);
         return view;
     }
     @Override
     public void onResume() {
         super.onResume();
-        loadPhimList();
+        loadPhim(ApiType.ALL_PHIM, phimAdapter);
     }
-    private void loadPhimList() {
-
-        phimDAO.getPhimList(new PhimDAO.PhimCallback() {
+    private void loadPhim(ApiType apiType, final ListPhimAdapter adapter) {
+        phimDAO.fetchPhimList(apiType, new PhimDAO.PhimCallback() {
             @Override
             public void onSuccess(List<Phim> phimList) {
-                phimAdapter.updatePhimList(phimList);
+                adapter.updatePhimList(phimList);
             }
 
             @Override
             public void onFailure(String message) {
-                Log.e("PhimFragment", "Failed to fetch data: " + message);
+                Log.e("MainActivity", "Failed to fetch data: " + message);
             }
         });
     }

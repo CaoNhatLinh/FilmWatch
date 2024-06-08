@@ -1,8 +1,9 @@
 package com.appxemphim.data;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Phim
+public class Phim implements Serializable
 {
     public Phim() {
     }

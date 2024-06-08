@@ -42,14 +42,22 @@ public interface ApiClient {
     Call<List<Phim>> getListPhimMoi();
     @GET("api/phim/china/top")
     Call<List<Phim>> getListPhimTrungQuocHot();
+    @GET("api/phim/china")
+    Call<List<Phim>> getAllListPhimTrungQuoc();
     @GET("api/phim/korea/top")
     Call<List<Phim>> getListPhimHanHot();
+    @GET("api/phim/korea")
+    Call<List<Phim>> getAllListPhimHan();
     @GET("api/phim/banner")
     Call<List<Phim>> getListPhimDaXem();
     @GET("api/phim/anime/top")
     Call<List<Phim>> getListTopAnime();
+    @GET("api/phim/anime")
+    Call<List<Phim>> getAllListAnime();
     @GET("api/phim/love/top")
     Call<List<Phim>> getListTopLove();
+    @GET("api/phim/love")
+    Call<List<Phim>> getAllListLove();
     //Nguoi dung
     @GET("api/nguoidung/{id}")
     Call<NguoiDung> getProfileById(@Path("id") int MaNguoiDung);

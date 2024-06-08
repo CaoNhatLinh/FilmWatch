@@ -2,7 +2,11 @@
 package com.appxemphim.dao;
 
 import com.appxemphim.Api.ApiClient;
+<<<<<<< HEAD
 import com.appxemphim.data.BinhLuan;
+=======
+import com.appxemphim.Api.ApiType;
+>>>>>>> b4d9e7c5abc072005f96688bfebc6ce9511cfa39
 import com.appxemphim.data.Phim;
 import com.appxemphim.data.TheLoai;
 import com.appxemphim.data.DanhGia;
@@ -23,24 +27,7 @@ public class PhimDAO {
         apiClient = ApiClient.apiClient;
     }
 
-    public void getPhimList(final PhimCallback callback) {
-        Call<List<Phim>> call = apiClient.getListPhim();
-        call.enqueue(new Callback<List<Phim>>() {
-            @Override
-            public void onResponse(Call<List<Phim>> call, Response<List<Phim>> response) {
-                if (response.isSuccessful()) {
-                    List<Phim> phimList = response.body();
-                    callback.onSuccess(phimList);
-                } else {
-                    callback.onFailure("Failed to fetch data: " + response.message());
-                }
-            }
-            @Override
-            public void onFailure(Call<List<Phim>> call, Throwable t) {
-                callback.onFailure(t.getMessage());
-            }
-        });
-    }
+
 
     public void getTop5Phim(final PhimCallback callback) {
         Call<List<Phim>> call = apiClient.getListBanner();
@@ -60,96 +47,64 @@ public class PhimDAO {
             }
         });
     }
-    public void getListPhimMoi(final PhimCallback callback) {
-        Call<List<Phim>> call = apiClient.getListPhimMoi();
-        call.enqueue(new Callback<List<Phim>>() {
-            @Override
-            public void onResponse(Call<List<Phim>> call, Response<List<Phim>> response) {
-                if (response.isSuccessful()) {
-                    List<Phim> phimList = response.body();
-                    callback.onSuccess(phimList);
-                } else {
-                    callback.onFailure("Failed to fetch data: " + response.message());
+
+    public void fetchPhimList(ApiType apiType, final PhimCallback callback) {
+        Call<List<Phim>> call = null;
+
+        switch (apiType) {
+            case ALL_PHIM:
+                call = apiClient.getListPhim();
+                break;
+            case PHIM_MOI:
+                call = apiClient.getListPhimMoi();
+                break;
+            case TOP_PHIM_TRUNG_QUOC:
+                call = apiClient.getListPhimTrungQuocHot();
+                break;
+            case PHIM_TRUNG_QUOC:
+                call = apiClient.getAllListPhimTrungQuoc();
+                break;
+            case TOP_PHIM_HAN:
+                call = apiClient.getListPhimHanHot();
+                break;
+            case PHIM_HAN:
+                call = apiClient.getAllListPhimHan();
+                break;
+            case TOP_ANIME:
+                call = apiClient.getListTopAnime();
+                break;
+            case ANIME:
+                call = apiClient.getAllListAnime();
+                break;
+            case TOP_LOVE:
+                call = apiClient.getListTopLove();
+                break;
+            case LOVE:
+                call = apiClient.getAllListLove();
+                break;
+        }
+
+        if (call != null) {
+            call.enqueue(new Callback<List<Phim>>() {
+                @Override
+                public void onResponse(Call<List<Phim>> call, Response<List<Phim>> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        callback.onSuccess(response.body());
+                    } else {
+                        callback.onFailure("Failed to fetch data: " + (response.message() != null ? response.message() : "No message"));
+                    }
                 }
-            }
-            @Override
-            public void onFailure(Call<List<Phim>> call, Throwable t) {
-                callback.onFailure(t.getMessage());
-            }
-        });
-    }
-    public void getListPhimTrungQuocHot(final PhimCallback callback) {
-        Call<List<Phim>> call = apiClient.getListPhimTrungQuocHot();
-        call.enqueue(new Callback<List<Phim>>() {
-            @Override
-            public void onResponse(Call<List<Phim>> call, Response<List<Phim>> response) {
-                if (response.isSuccessful()) {
-                    List<Phim> phimList = response.body();
-                    callback.onSuccess(phimList);
-                } else {
-                    callback.onFailure("Failed to fetch data: " + response.message());
+
+                @Override
+                public void onFailure(Call<List<Phim>> call, Throwable t) {
+                    callback.onFailure(t.getMessage());
                 }
-            }
-            @Override
-            public void onFailure(Call<List<Phim>> call, Throwable t) {
-                callback.onFailure(t.getMessage());
-            }
-        });
+            });
+        } else {
+            callback.onFailure("Invalid API type");
+        }
     }
-    public void getListPhimHanHot(final PhimCallback callback) {
-        Call<List<Phim>> call = apiClient.getListPhimHanHot();
-        call.enqueue(new Callback<List<Phim>>() {
-            @Override
-            public void onResponse(Call<List<Phim>> call, Response<List<Phim>> response) {
-                if (response.isSuccessful()) {
-                    List<Phim> phimList = response.body();
-                    callback.onSuccess(phimList);
-                } else {
-                    callback.onFailure("Failed to fetch data: " + response.message());
-                }
-            }
-            @Override
-            public void onFailure(Call<List<Phim>> call, Throwable t) {
-                callback.onFailure(t.getMessage());
-            }
-        });
-    }
-    public void getTopAnime(final PhimCallback callback) {
-        Call<List<Phim>> call = apiClient.getListTopAnime();
-        call.enqueue(new Callback<List<Phim>>() {
-            @Override
-            public void onResponse(Call<List<Phim>> call, Response<List<Phim>> response) {
-                if (response.isSuccessful()) {
-                    List<Phim> phimList = response.body();
-                    callback.onSuccess(phimList);
-                } else {
-                    callback.onFailure("Failed to fetch data: " + response.message());
-                }
-            }
-            @Override
-            public void onFailure(Call<List<Phim>> call, Throwable t) {
-                callback.onFailure(t.getMessage());
-            }
-        });
-    }
-    public void getTopLove(final PhimCallback callback) {
-        Call<List<Phim>> call = apiClient.getListTopLove();
-        call.enqueue(new Callback<List<Phim>>() {
-            @Override
-            public void onResponse(Call<List<Phim>> call, Response<List<Phim>> response) {
-                if (response.isSuccessful()) {
-                    List<Phim> phimList = response.body();
-                    callback.onSuccess(phimList);
-                } else {
-                    callback.onFailure("Failed to fetch data: " + response.message());
-                }
-            }
-            @Override
-            public void onFailure(Call<List<Phim>> call, Throwable t) {
-                callback.onFailure(t.getMessage());
-            }
-        });
-    }
+
     public void getListPhimDaXem(final PhimCallback callback) {
         Call<List<Phim>> call = apiClient.getListPhimDaXem();
         call.enqueue(new Callback<List<Phim>>() {
