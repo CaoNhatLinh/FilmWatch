@@ -17,7 +17,6 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 import retrofit2.http.POST;
 
 public interface ApiClient {
@@ -61,7 +60,8 @@ public interface ApiClient {
     //Nguoi dung
     @GET("api/nguoidung/{id}")
     Call<NguoiDung> getProfileById(@Path("id") int MaNguoiDung);
-
+    @GET("api/nguoidung/profile/{TenDangNhap}")
+    Call<NguoiDung> getProfileByTenDangNhap(@Path("TenDangNhap") String TenDangNhap);
     
     //Triệu thêm
     // Đăng nhập

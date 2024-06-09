@@ -73,6 +73,24 @@ public class NguoiDungDAO {
             }
         });
     }
+    public void getProfile(String TenDangNhap, final NguoiDungCallback callback) {
+        Call<NguoiDung> call = apiClient.getProfileByTenDangNhap(TenDangNhap);
+        call.enqueue(new Callback<NguoiDung>() {
+            @Override
+            public void onResponse(Call<NguoiDung> call, Response<NguoiDung> response) {
+                if (response.isSuccessful()) {
+                    NguoiDung nguoiDung = response.body();
+                    callback.onSuccess(nguoiDung);
+                } else {
+                    callback.onFailure("Failed to login: " + response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<NguoiDung> call, Throwable t) {
+                callback.onFailure(t.getMessage());
+            }
+        });
+    }
     public void register(NguoiDung nguoiDung, final RegisterCallback callback) {
         Call<Void> call = apiClient.register(nguoiDung);
         call.enqueue(new Callback<Void>() {

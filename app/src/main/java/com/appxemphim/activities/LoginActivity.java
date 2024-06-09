@@ -62,7 +62,6 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     // Thực hiện đăng nhập
                     performLogin(emailOrUsername, password);
-
                 }
             }
         });
@@ -73,6 +72,22 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(NguoiDung nguoiDung) {
                 // Đăng nhập thành công, xử lý logic tiếp theo ở đây (ví dụ: chuyển sang màn hình chính)
+                getProfileNguoiDung(emailOrUsername);
+
+            }
+
+            @Override
+            public void onFailure(String message) {
+                // Đăng nhập thất bại, thông báo lỗi
+                Toast.makeText(LoginActivity.this, "Đăng nhập thất bại1: " + message, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void getProfileNguoiDung(String emailOrUsername)
+    {
+        nguoiDungDAO.getProfile(emailOrUsername, new NguoiDungDAO.NguoiDungCallback() {
+            @Override
+            public void onSuccess(NguoiDung nguoiDung) {
                 Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                 int userId = nguoiDung.getMaNguoiDung();
                 Intent intent = new Intent(LoginActivity.this, TrangChuActivity.class);
@@ -83,9 +98,10 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(String message) {
-                // Đăng nhập thất bại, thông báo lỗi
-                Toast.makeText(LoginActivity.this, "Đăng nhập thất bại: " + message, Toast.LENGTH_SHORT).show();
+                System.out.println(message);
+                Toast.makeText(LoginActivity.this, "Đăng nhập thất bại2: " + message, Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 }
