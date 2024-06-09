@@ -79,6 +79,14 @@ public interface ApiClient {
 
     @POST("api/nguoidung/register") // Địa chỉ endpoint cho đăng ký
     Call<Void> register(@Body NguoiDung registerRequest);
+
+
+
+    // Tìm kiếm phim theo tiêu đề
+    @GET("api/phim/search1/{title}")
+    Call<List<Phim>> searchPhimByTitle(@Path("title") String title);
+
+
     @GET("api/phim/{id}")
     Call<Phim> getPhimById(@Path("id") int id);
 

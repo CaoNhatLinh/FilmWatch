@@ -19,6 +19,9 @@
         android:theme="@style/Theme.AppXemPhim"
         tools:targetApi="31">
         <activity
+            android:name=".activities.SearchActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.TrangChuActivity"
             android:exported="false" />
         <activity
@@ -50,8 +53,8 @@
             android:exported="false" />
         <activity
             android:name=".activities.LoginActivity"
-            android:exported="true"
             android:configChanges="orientation|screenSize|screenLayout"
+            android:exported="true"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
