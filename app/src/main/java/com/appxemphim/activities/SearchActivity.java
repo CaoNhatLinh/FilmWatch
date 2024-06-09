@@ -41,7 +41,7 @@ public class SearchActivity extends AppCompatActivity {
 
         searchEditText = findViewById(R.id.searchEditText);
         searchButton = findViewById(R.id.searchButton);
-        movieTitles = new ArrayList<>(); // Sử dụng biến movieTitles đã khai báo ở cấp độ lớp
+        movieTitles = new ArrayList<>();
         adapter = new CustomListAdapter(this, R.layout.list_item_layout, movieTitles); // Sử dụng biến adapter đã khai báo ở cấp độ lớp
         listView = findViewById(R.id.listView); // Gán listView vào biến ở cấp độ lớp
         listView.setAdapter(adapter);
@@ -53,10 +53,17 @@ public class SearchActivity extends AppCompatActivity {
                 if (!title.isEmpty()) {
                     searchMovies(title);
                 } else {
-                    Toast.makeText(SearchActivity.this, "Please enter a movie title", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchActivity.this, "Vui lòng nhập tên phim", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            Phim selectedMovie = movieTitles.get(position);
+            Intent intent = new Intent(SearchActivity.this, ChiTietPhimActivity.class);
+            intent.putExtra("MaPhim", selectedMovie.getMaPhim());
+            startActivity(intent);
+        });
+
     }
 
     private void searchMovies(String title) {
@@ -71,7 +78,7 @@ public class SearchActivity extends AppCompatActivity {
                     }
                     adapter.notifyDataSetChanged();
                 } else {
-                    Toast.makeText(SearchActivity.this, "No movies found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchActivity.this, "Không tìm thấy phim nào", Toast.LENGTH_SHORT).show();
                 }
             }
 
