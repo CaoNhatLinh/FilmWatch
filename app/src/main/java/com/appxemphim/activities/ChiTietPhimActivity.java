@@ -204,35 +204,11 @@ public class ChiTietPhimActivity extends AppCompatActivity {
         });
     }
 
-//    private void fetchPhimDetails(int maPhim) {
-//        PhimDAO phimDAO = new PhimDAO();
-//        phimDAO.getPhimById(maPhim, new PhimDAO.PhimByIdCallback() {
-//            @Override
-//            public void onSuccess(Phim phim) {
-//                titleTextView.setText(phim.getTieuDe());
-//                descriptionTextView.setText(phim.getMoTa());
-//                Glide.with(ChiTietPhimActivity.this).load(phim.getBanner()).into(posterImageView);
-//                if (phim.getMoTa() == null || phim.getMoTa().isEmpty()) {
-//                    tvReadMore.setVisibility(View.GONE);
-//                    descriptionTextView.setText("Không có mô tả cho phim này.");
-//                } else {
-//                    descriptionTextView.setText(phim.getMoTa());
-//                    tvReadMore.setVisibility(View.VISIBLE);
-//                }
-//                fetchTheLoaiPhim(phim.getMaPhim());
-//                fetchDanhGiaPhim(phim.getMaPhim());
-//            }
-//
-//            @Override
-//            public void onFailure(String error) {
-//                Toast.makeText(ChiTietPhimActivity.this, "Không thể lấy thông tin phim", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
+
 private void fetchPhimDetails(int maPhim) {
     PhimDAO phimDAO = new PhimDAO();
     TapPhimDAO tapPhimDAO=new TapPhimDAO();
-    tapPhimDAO.getTapPhim(maPhim, new TapPhimDAO.TapPhimCallback() {
+    tapPhimDAO.getTapPhim(maPhim,new TapPhimDAO.TapPhimCallback() {
         @Override
         public void onSuccess(List<TapPhim> tapPhimList) {
             if (tapPhimList.isEmpty()) {
