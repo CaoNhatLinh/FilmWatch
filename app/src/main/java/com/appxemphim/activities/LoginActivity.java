@@ -116,6 +116,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+    private int getCurrentUserID() {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        if (sharedPreferences.contains("userId")) {
+            return sharedPreferences.getInt("userId", -1);
+        } else {
+            return -1;
+        }
+    }
     private void saveUserIdToSharedPreferences(int userId) {
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

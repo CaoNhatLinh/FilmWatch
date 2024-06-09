@@ -94,6 +94,7 @@
                         android:textStyle="bold" />
                 </LinearLayout>
 
+
                 <LinearLayout
                     android:id="@+id/profileLayout"
                     android:layout_width="0dp"

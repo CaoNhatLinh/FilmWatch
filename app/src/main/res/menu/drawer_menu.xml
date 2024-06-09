@@ -1,0 +1,64 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_anime"
+            android:title="Anime" />
+        <item
+            android:id="@+id/nav_bi_an"
+            android:title="Bí ẩn" />
+        <item
+            android:id="@+id/nav_chien_tranh"
+            android:title="Chiến trang" />
+        <item
+            android:id="@+id/nav_chinh_kich"
+            android:title="Chính kịch" />
+        <item
+            android:id="@+id/nav_co_trang"
+            android:title="Cổ trang" />
+        <item
+            android:id="@+id/nav_gia_dinh"
+            android:title="Gia đình" />
+        <item
+            android:id="@+id/nav_gia_tuong"
+            android:title="Giả tưởng" />
+        <item
+            android:id="@+id/nav_hai_huoc"
+            android:title="Hài hước" />
+        <item
+            android:id="@+id/nav_hanh_dong"
+            android:title="Hành động" />
+        <item
+            android:id="@+id/nav_hoat_hinh"
+            android:title="Hoạt hình" />
+        <item
+            android:id="@+id/nav_khoa_hoc_vien_tuong"
+            android:title="Khoa học viễn tưởng" />
+        <item
+            android:id="@+id/nav_kinh_di"
+            android:title="Kinh dị" />
+        <item
+            android:id="@+id/nav_lang_man"
+            android:title="Lãng mãn" />
+        <item
+            android:id="@+id/nav_lich_su"
+            android:title="Lịch sử" />
+        <item
+            android:id="@+id/nav_phieu_luu"
+            android:title="Phiêu lưu" />
+        <item
+            android:id="@+id/nav_phim_bo"
+            android:title="Phim bộ" />
+        <item
+            android:id="@+id/nav_phim_le"
+            android:title="Phim lẻ" />
+        <item
+            android:id="@+id/nav_tai_lieu"
+            android:title="Tài liệu" />
+        <item
+            android:id="@+id/nav_tam_ly"
+            android:title="Tâm lý" />
+        <item
+            android:id="@+id/nav_tinh_cam"
+            android:title="Tình cảm" />
+    </group>
+</menu>

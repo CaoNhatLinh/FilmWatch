@@ -35,6 +35,20 @@
             android:textColor="@color/light_white"
             android:layout_weight="1"
             android:text="Chi tiết phim" />
+        <!-- Yêu thích Button -->
+        <ImageView
+            android:id="@+id/favoriteButton"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_favorite_outline"
+            android:padding="3dp"
+
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/linearLayout3"
+            android:clickable="true"
+            android:focusable="true" />
     </LinearLayout>
 
     <!-- Movie Poster with Overlay -->

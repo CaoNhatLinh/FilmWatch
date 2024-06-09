@@ -6,6 +6,7 @@ import com.appxemphim.data.NguoiDung;
 import com.appxemphim.data.Phim;
 import com.appxemphim.data.TapPhim;
 import com.appxemphim.data.TheLoai;
+import com.appxemphim.data.YeuThich;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.appxemphim.data.DanhGia;
@@ -16,6 +17,7 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -87,7 +89,27 @@ public interface ApiClient {
 
     @POST("api/nguoidung/checkUserExist")
     Call<Void> checkUserExist(@Body String emailOrUsername);
+    @GET("api/yeuthich/{maNguoiDung}")
+    Call<List<YeuThich>> getListYeuThichByUserId(@Path("maNguoiDung") int maNguoiDung);
 
+    @POST("api/yeuthich")
+    Call<Void> addYeuThich(@Body YeuThich yeuThich);
+
+    @DELETE("api/yeuthich/{maNguoiDung}/{maPhim}")
+    Call<Void> deleteYeuThich(@Path("maNguoiDung") int maNguoiDung, @Path("maPhim") int maPhim);
+
+//    // Yeu thich
+//    @GET("api/YeuThich")
+//    Call<List<YeuThich>> getListYeuThich();
+//
+//    @GET("api/YeuThich/{maNguoiDung}")
+//    Call<List<YeuThich>> getListYeuThichByUserId(@Path("maNguoiDung") int maNguoiDung);
+//
+//    @POST("api/YeuThich")
+//    Call<Void> addYeuThich(@Body YeuThich yeuThich);
+//
+//    @DELETE("api/YeuThich/{maNguoiDung}/{maPhim}")
+//    Call<Void> deleteYeuThich(@Path("maNguoiDung") int maNguoiDung, @Path("maPhim") int maPhim);
 
     // Lấy danh sách đánh giá của phim theo ID phim
     @GET("api/phim/{phimId}/danhgia")

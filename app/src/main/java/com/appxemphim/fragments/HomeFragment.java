@@ -23,6 +23,7 @@ import com.appxemphim.adapters.BannerAdapter;
 import com.appxemphim.adapters.ListPhimAdapter;
 import com.appxemphim.dao.PhimDAO;
 import com.appxemphim.data.Phim;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;

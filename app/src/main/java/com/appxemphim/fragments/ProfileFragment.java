@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -15,24 +14,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.appxemphim.R;
+import com.appxemphim.activities.FavoriteListActivity;
 import com.appxemphim.activities.HistoryMovieActivity;
 import com.appxemphim.activities.MainActivity;
 import com.appxemphim.activities.ProfileDetailActivity;
 import com.appxemphim.dao.NguoiDungDAO;
 import com.appxemphim.data.NguoiDung;
-import com.appxemphim.data.Phim;
-
-import java.util.List;
 
 
 public class ProfileFragment extends Fragment {
 
     private Button btnHistoryMoives;
     private Button btnProfileDetails,btnLogout;
+    private Button btnYeuThich;
     private NguoiDungDAO nguoiDungDAO;
     private static final int EDIT_PROFILE_REQUEST_CODE = 1;
     private TextView tvName;
@@ -57,6 +54,7 @@ public class ProfileFragment extends Fragment {
         btnHistoryMoives = view.findViewById(R.id.btnHistoryMovies);
         nguoiDungDAO = new NguoiDungDAO();
         btnProfileDetails = view.findViewById(R.id.btnProfileDetails);
+        btnYeuThich = view.findViewById(R.id.btnYeuThich);  // Thêm dòng này
         int id;
         Bundle bundle = getArguments();
         if (bundle != null) {
@@ -88,6 +86,14 @@ public class ProfileFragment extends Fragment {
     }
     public void load(int id)
     {
+        btnYeuThich.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), FavoriteListActivity.class);
+                intent.putExtra("MaNguoiDung", id);
+                startActivity(intent);
+            }
+        });
         btnProfileDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

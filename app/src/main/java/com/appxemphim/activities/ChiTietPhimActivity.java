@@ -15,15 +15,22 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appxemphim.Api.ApiClient;
 import com.appxemphim.R;
 import com.appxemphim.dao.PhimDAO;
+import com.appxemphim.dao.YeuThichDao;
 import com.appxemphim.data.DanhGia;
 import com.appxemphim.data.Phim;
 import com.appxemphim.data.TheLoai;
+import com.appxemphim.data.YeuThich;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ChiTietPhimActivity extends AppCompatActivity {
     private ImageView posterImageView;
@@ -32,13 +39,17 @@ public class ChiTietPhimActivity extends AppCompatActivity {
     private String initialDescription;
     private RatingBar movieRatingBar;
     private Button playFlim;
-
-    private int maNguoiDung,maPhim;
+    private ImageView favoriteButton;
+    private int maNguoiDung, maPhim;
+    private boolean isFavorite = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chi_tiet_phim);
+
+        // Lấy mã người dùng hiện tại từ SharedPreferences
+        maNguoiDung = getCurrentUserID();
 
         // Ánh xạ view từ layout
         titleTextView = findViewById(R.id.movieTitle);
@@ -48,6 +59,7 @@ public class ChiTietPhimActivity extends AppCompatActivity {
         ratingTextView = findViewById(R.id.movieRating);
         movieRatingBar = findViewById(R.id.movieRatingBar);
         playFlim = findViewById(R.id.watchMovieButton);
+        favoriteButton = findViewById(R.id.favoriteButton);
 
         maPhim = getIntent().getIntExtra("MaPhim", -1);
         if (maPhim != -1) {
@@ -85,25 +97,107 @@ public class ChiTietPhimActivity extends AppCompatActivity {
 
         movieRatingBar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
             if (fromUser) {
-                maNguoiDung=getCurrentUserID();
+                maNguoiDung = getCurrentUserID();
                 if (maNguoiDung != -1) {
                     checkAndSendRatingToServer(maPhim, rating);
                 }
             }
         });
+
+        favoriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (maNguoiDung != -1) {
+                    toggleFavoriteStatus(maPhim, maNguoiDung);
+                } else {
+                    // Nếu không thể lấy mã người dùng, thông báo lỗi cho người dùng
+                    Toast.makeText(ChiTietPhimActivity.this, "Không thể lấy mã người dùng. Vui lòng đăng nhập lại.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         playFlim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ChiTietPhimActivity.this, XemPhimActivity.class);
-                intent.putExtra("MaPhim",maPhim);
+                intent.putExtra("MaPhim", maPhim);
                 startActivity(intent);
             }
         });
     }
 
+    private void toggleFavoriteStatus(int maPhim, int maNguoiDung) {
+        YeuThichDao yeuThichDao = new YeuThichDao();
+        yeuThichDao.getListYeuThichByUserId(maNguoiDung, new Callback<List<YeuThich>>() {
+            @Override
+            public void onResponse(Call<List<YeuThich>> call, Response<List<YeuThich>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<YeuThich> yeuThichList = response.body();
+                    for (YeuThich yeuThich : yeuThichList) {
+                        if (yeuThich.getMaPhim() == maPhim) {
+                            isFavorite = true;
+                            break;
+                        }
+                    }
+                    if (isFavorite) {
+                        removePhimFromYeuThich(maPhim, maNguoiDung);
+                    } else {
+                        addPhimToYeuThich(maPhim, maNguoiDung);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<YeuThich>> call, Throwable t) {
+                Toast.makeText(ChiTietPhimActivity.this, "Lỗi: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void addPhimToYeuThich(int maPhim, int maNguoiDung) {
+        YeuThichDao yeuThichDao = new YeuThichDao();
+        yeuThichDao.addYeuThich(maNguoiDung, maPhim, new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    isFavorite = true;
+                    favoriteButton.setImageResource(R.drawable.ic_favorite_filled); // Cập nhật biểu tượng yêu thích
+                    Toast.makeText(ChiTietPhimActivity.this, "Đã thêm vào danh sách yêu thích", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ChiTietPhimActivity.this, "Không thể thêm vào danh sách yêu thích", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(ChiTietPhimActivity.this, "Lỗi: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void removePhimFromYeuThich(int maPhim, int maNguoiDung) {
+        YeuThichDao yeuThichDao = new YeuThichDao();
+        yeuThichDao.deleteYeuThich(maNguoiDung, maPhim, new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    isFavorite = false;
+                    favoriteButton.setImageResource(R.drawable.ic_favorite_border); // Cập nhật biểu tượng yêu thích
+                    Toast.makeText(ChiTietPhimActivity.this, "Đã xóa khỏi danh sách yêu thích", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ChiTietPhimActivity.this, "Không thể xóa khỏi danh sách yêu thích", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(ChiTietPhimActivity.this, "Lỗi: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     private void checkAndSendRatingToServer(int maPhim, float rating) {
-        maNguoiDung=getCurrentUserID();
+        maNguoiDung = getCurrentUserID();
         if (maNguoiDung == -1) {
             Toast.makeText(this, "Không thể lấy mã người dùng. Vui lòng đăng nhập lại.", Toast.LENGTH_SHORT).show();
             return;
@@ -126,10 +220,12 @@ public class ChiTietPhimActivity extends AppCompatActivity {
             }
         });
     }
+
     private int getCurrentUserID() {
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         return sharedPreferences.getInt("userId", -1);
     }
+
     private void updateRatingOnServer(int maPhim, int maNguoiDung, float rating) {
         PhimDAO phimDAO = new PhimDAO();
         phimDAO.updateDanhGiaPhim(maPhim, maNguoiDung, rating, new PhimDAO.UpdateDanhGiaCallback() {
@@ -213,6 +309,7 @@ public class ChiTietPhimActivity extends AppCompatActivity {
                 }
                 fetchTheLoaiPhim(phim.getMaPhim());
                 fetchDanhGiaPhim(phim.getMaPhim());
+                checkFavoriteStatus(phim.getMaPhim(), maNguoiDung);
             }
 
             @Override
@@ -267,6 +364,30 @@ public class ChiTietPhimActivity extends AppCompatActivity {
             @Override
             public void onFailure(String error) {
                 Toast.makeText(ChiTietPhimActivity.this, "Lỗi: " + error, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void checkFavoriteStatus(int maPhim, int maNguoiDung) {
+        YeuThichDao yeuThichDao = new YeuThichDao();
+        yeuThichDao.getListYeuThichByUserId(maNguoiDung, new Callback<List<YeuThich>>() {
+            @Override
+            public void onResponse(Call<List<YeuThich>> call, Response<List<YeuThich>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<YeuThich> yeuThichList = response.body();
+                    for (YeuThich yeuThich : yeuThichList) {
+                        if (yeuThich.getMaPhim() == maPhim) {
+                            isFavorite = true;
+                            favoriteButton.setImageResource(R.drawable.ic_favorite_filled); // Cập nhật biểu tượng yêu thích
+                            break;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<YeuThich>> call, Throwable t) {
+                Toast.makeText(ChiTietPhimActivity.this, "Lỗi: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

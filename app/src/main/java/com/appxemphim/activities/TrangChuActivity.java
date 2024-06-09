@@ -23,6 +23,7 @@ public class TrangChuActivity extends AppCompatActivity {
     private View moviesLayout;
     private View profileLayout;
 
+
     private int flag = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,7 @@ public class TrangChuActivity extends AppCompatActivity {
         homeLayout = findViewById(R.id.homeLayout);
         moviesLayout = findViewById(R.id.moviesLayout);
         profileLayout = findViewById(R.id.profileLayout);
+
 
         // Set initial fragment
         replaceFragment(new HomeFragment());
@@ -58,6 +60,7 @@ public class TrangChuActivity extends AppCompatActivity {
 
             }
         });
+
         profileLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
