@@ -16,30 +16,36 @@ public class NguoiDung {
         Email = email;
 
     }
+    public NguoiDung( int id ,String hoten, String tenDangNhap,String email) {
+        TenDangNhap = tenDangNhap;
+        HoTen = hoten;
+        Email = email;
+        MaNguoiDung = id;
+    }
 
-        public int getMaNguoiDung() {
-            return MaNguoiDung;
-        }
+    public int getMaNguoiDung() {
+        return MaNguoiDung;
+    }
 
-        public void setMaNguoiDung(int maNguoiDung) {
-            MaNguoiDung = maNguoiDung;
-        }
+    public void setMaNguoiDung(int maNguoiDung) {
+        MaNguoiDung = maNguoiDung;
+    }
 
-        public String getTenDangNhap() {
-            return TenDangNhap;
-        }
+    public String getTenDangNhap() {
+        return TenDangNhap;
+    }
 
-        public void setTenDangNhap(String tenDangNhap) {
-            TenDangNhap = tenDangNhap;
-        }
+    public void setTenDangNhap(String tenDangNhap) {
+        TenDangNhap = tenDangNhap;
+    }
 
-        public String getMatKhau() {
-            return MatKhau;
-        }
+    public String getMatKhau() {
+        return MatKhau;
+    }
 
-        public void setMatKhau(String matKhau) {
-            MatKhau = matKhau;
-        }
+    public void setMatKhau(String matKhau) {
+        MatKhau = matKhau;
+    }
 
     public String getEmail() {
         return Email;

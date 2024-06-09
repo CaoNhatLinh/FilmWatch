@@ -1,8 +1,12 @@
 package com.appxemphim.fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -11,10 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.appxemphim.R;
 import com.appxemphim.activities.HistoryMovieActivity;
+import com.appxemphim.activities.MainActivity;
 import com.appxemphim.activities.ProfileDetailActivity;
 import com.appxemphim.dao.NguoiDungDAO;
 import com.appxemphim.data.NguoiDung;
@@ -26,9 +32,9 @@ import java.util.List;
 public class ProfileFragment extends Fragment {
 
     private Button btnHistoryMoives;
-    private Button btnProfileDetails;
+    private Button btnProfileDetails,btnLogout;
     private NguoiDungDAO nguoiDungDAO;
-
+    private static final int EDIT_PROFILE_REQUEST_CODE = 1;
     private TextView tvName;
     public ProfileFragment() {
     }
@@ -47,24 +53,49 @@ public class ProfileFragment extends Fragment {
     {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         tvName = view.findViewById(R.id.tvName);
-
-        int id= 2;
-        //Bundle bundle = getArguments();
-//        if (bundle != null) {
-//            id = bundle.getInt("MaNguoiDung");
-//            getProfileById(data);
-//        }
-        gotoHistoryMoivesActivity(view,id);
-        gotoProfileDetailsActivity(view,id);
+        btnLogout = view.findViewById(R.id.btnLogout);
+        btnHistoryMoives = view.findViewById(R.id.btnHistoryMovies);
         nguoiDungDAO = new NguoiDungDAO();
+        btnProfileDetails = view.findViewById(R.id.btnProfileDetails);
+        int id;
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            id = bundle.getInt("MaNguoiDung");
+            load(id);
 
-        getProfileById(id);
+        }
+
         return view;
     }
 
-    public void gotoHistoryMoivesActivity(View view,int id)
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == EDIT_PROFILE_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                String newUserName = data.getStringExtra("hoten");
+
+                TextView userNameTextView = getView().findViewById(R.id.tvName);
+                userNameTextView.setText(newUserName);
+            }
+        }
+    }
+    public void load(int id)
     {
-        btnHistoryMoives = view.findViewById(R.id.btnHistoryMovies);
+        btnProfileDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ProfileDetailActivity.class);
+                intent.putExtra("MaNguoiDung", id);
+                startActivityForResult(intent, EDIT_PROFILE_REQUEST_CODE);
+            }
+        });
         btnHistoryMoives.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,14 +104,19 @@ public class ProfileFragment extends Fragment {
                 startActivity(intent);
             }
         });
-    }
-    @Override
-    public void onResume() {
-        super.onResume();
-
-    }
-    public void getProfileById(int id)
-    {
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.apply();
+                getActivity().finish();
+            }
+        });
         nguoiDungDAO.getProfileById(id, new NguoiDungDAO.NguoiDungCallback() {
             @Override
             public void onSuccess(NguoiDung nguoiDung) {
@@ -90,18 +126,6 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onFailure(String errorMessage) {
                 Log.e("ProfileFragment", "Failed to fetch data: " + errorMessage);
-            }
-        });
-    }
-    public void gotoProfileDetailsActivity(View view,int id)
-    {
-        btnProfileDetails = view.findViewById(R.id.btnProfileDetails);
-        btnProfileDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ProfileDetailActivity.class);
-                intent.putExtra("MaNguoiDung", id);
-                startActivity(intent);
             }
         });
     }

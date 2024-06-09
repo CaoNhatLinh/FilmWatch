@@ -213,7 +213,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="Nhập bình luận của bạn"
-            android:textSize="16sp"/>
+            android:minHeight="48dp"
+            android:textSize="16sp" />
 
         <!-- Send Comment Button -->
         <Button

@@ -46,6 +46,8 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-gson:2.1.0")
     implementation ("com.google.code.gson:gson:2.8.6")
     implementation ("com.squareup.picasso:picasso:2.5.2")
+    implementation ("com.google.android.exoplayer:exoplayer:2.19.1")
+    implementation ("com.github.norulab:android-exoplayer-fullscreen:1.2.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
