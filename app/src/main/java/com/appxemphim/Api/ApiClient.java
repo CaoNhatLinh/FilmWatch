@@ -1,5 +1,6 @@
 package com.appxemphim.Api;
 import com.appxemphim.data.BinhLuan;
+import com.appxemphim.data.ChangePasswordRequest;
 import com.appxemphim.data.LoginRequest;
 import com.appxemphim.data.NguoiDung;
 import com.appxemphim.data.Phim;
@@ -73,6 +74,14 @@ public interface ApiClient {
     Call<Void> register(@Body NguoiDung registerRequest);
     @GET("api/phim/{id}")
     Call<Phim> getPhimById(@Path("id") int id);
+
+    // Thay đổi mật khẩu
+    @POST("api/nguoidung/change-password")
+    Call<Void> changePassword(@Body ChangePasswordRequest changePasswordRequest);
+
+    @POST("api/nguoidung/checkUserExist")
+    Call<Void> checkUserExist(@Body String emailOrUsername);
+
 
     // Lấy danh sách đánh giá của phim theo ID phim
     @GET("api/phim/{phimId}/danhgia")
