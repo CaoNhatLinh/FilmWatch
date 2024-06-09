@@ -208,7 +208,7 @@ public class ChiTietPhimActivity extends AppCompatActivity {
 private void fetchPhimDetails(int maPhim) {
     PhimDAO phimDAO = new PhimDAO();
     TapPhimDAO tapPhimDAO=new TapPhimDAO();
-    tapPhimDAO.getTapPhim(maPhim,new TapPhimDAO.TapPhimCallback() {
+    tapPhimDAO.getTapPhim(maPhim,new TapPhimDAO.ListTapPhimCallback() {
         @Override
         public void onSuccess(List<TapPhim> tapPhimList) {
             if (tapPhimList.isEmpty()) {
