@@ -12,6 +12,9 @@ public class DanhGia {
         NgayDanhGia = ngayDanhGia;
     }
 
+    public DanhGia(int maNguoiDung, int maPhim, float rating, Date date) {
+    }
+
     public int getMaDanhGia() {
         return MaDanhGia;
     }
