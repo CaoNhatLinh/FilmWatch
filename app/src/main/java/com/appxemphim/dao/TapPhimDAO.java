@@ -1,9 +1,6 @@
 package com.appxemphim.dao;
 
-import android.util.Log;
-
 import com.appxemphim.Api.ApiClient;
-import com.appxemphim.data.NguoiDung;
 import com.appxemphim.data.Phim;
 import com.appxemphim.data.TapPhim;
 
@@ -19,7 +16,7 @@ public class TapPhimDAO {
     public TapPhimDAO() {
         apiClient = ApiClient.apiClient;
     }
-    public void getTapPhim(int maphim,final TapPhimDAO.ListTapPhimCallback callback) {
+    public void getTapPhim(int maphim,final TapPhimDAO.TapPhimCallback callback) {
         Call<List<TapPhim>> call = apiClient.getListTapPhim(maphim);
         call.enqueue(new Callback<List<TapPhim>>() {
             @Override
@@ -37,38 +34,12 @@ public class TapPhimDAO {
             }
         });
     }
-    public void getTapPhimById(int mataphim, final TapPhimDAO.TapPhimCallback callback) {
-        Call<TapPhim> call = apiClient.getTapPhim(mataphim);
 
-
-        call.enqueue(new Callback<TapPhim>() {
-            @Override
-            public void onResponse(Call<TapPhim> call, Response<TapPhim> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    TapPhim tapPhim = response.body();
-                    callback.onSuccess(tapPhim);
-                } else {
-                    String errorMessage = "Failed to fetch data: " + response.message();
-
-                    // Log error response
-                    Log.e("API Response", errorMessage);
-
-                    callback.onFailure(errorMessage);
-                }
-            }
-            @Override
-            public void onFailure(Call<TapPhim> call, Throwable t) {
-                String errorMessage = "API call failed: " + t.getMessage();
-                callback.onFailure(errorMessage);
-            }
-        });
+    public void getTapPhimById(int maTapPhim, TapPhimCallback profileFragment) {
     }
-    public interface ListTapPhimCallback {
-        void onSuccess(List<TapPhim> phimList);
-        void onFailure(String message);
-    }
+
     public interface TapPhimCallback {
-        void onSuccess(TapPhim tapPhim);
+        void onSuccess(List<TapPhim> phimList);
         void onFailure(String message);
     }
 }

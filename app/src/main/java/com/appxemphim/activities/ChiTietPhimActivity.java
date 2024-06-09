@@ -1,11 +1,9 @@
 package com.appxemphim.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,14 +18,9 @@ import android.widget.Toast;
 import com.appxemphim.Api.ApiClient;
 import com.appxemphim.R;
 import com.appxemphim.dao.PhimDAO;
-<<<<<<< HEAD
 import com.appxemphim.dao.YeuThichDao;
-=======
-import com.appxemphim.dao.TapPhimDAO;
->>>>>>> origin/main
 import com.appxemphim.data.DanhGia;
 import com.appxemphim.data.Phim;
-import com.appxemphim.data.TapPhim;
 import com.appxemphim.data.TheLoai;
 import com.appxemphim.data.YeuThich;
 import com.bumptech.glide.Glide;
@@ -46,14 +39,9 @@ public class ChiTietPhimActivity extends AppCompatActivity {
     private String initialDescription;
     private RatingBar movieRatingBar;
     private Button playFlim;
-<<<<<<< HEAD
     private ImageView favoriteButton;
     private int maNguoiDung, maPhim;
     private boolean isFavorite = false;
-=======
-
-    private int maNguoiDung,maPhim,maDanhGia;
->>>>>>> origin/main
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -219,14 +207,11 @@ public class ChiTietPhimActivity extends AppCompatActivity {
         phimDAO.getDanhGiaPhim(maPhim, new PhimDAO.DanhGiaCallback() {
             @Override
             public void onSuccess(List<DanhGia> danhGiaList) {
-                for (DanhGia danhGia : danhGiaList) {
-                    if (danhGia.getMaNguoiDung() == maNguoiDung) {
-                        maDanhGia = danhGia.getMaDanhGia();
-                        updateRatingOnServer(maDanhGia, maPhim, maNguoiDung, rating);
-                        return;
-                    }
+                if (!danhGiaList.isEmpty()) {
+                    updateRatingOnServer(maPhim, maNguoiDung, rating);
+                } else {
+                    sendRatingToServer(maPhim, maNguoiDung, rating);
                 }
-                sendRatingToServer(maPhim, maNguoiDung, rating);
             }
 
             @Override
@@ -240,14 +225,10 @@ public class ChiTietPhimActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         return sharedPreferences.getInt("userId", -1);
     }
-<<<<<<< HEAD
 
     private void updateRatingOnServer(int maPhim, int maNguoiDung, float rating) {
-=======
-    private void updateRatingOnServer(int maDanhGia,int maPhim, int maNguoiDung, float rating) {
->>>>>>> origin/main
         PhimDAO phimDAO = new PhimDAO();
-        phimDAO.updateDanhGiaPhim(maDanhGia,maPhim, maNguoiDung, rating, new PhimDAO.UpdateDanhGiaCallback() {
+        phimDAO.updateDanhGiaPhim(maPhim, maNguoiDung, rating, new PhimDAO.UpdateDanhGiaCallback() {
             @Override
             public void onSuccess() {
                 runOnUiThread(new Runnable() {
@@ -311,7 +292,6 @@ public class ChiTietPhimActivity extends AppCompatActivity {
         });
     }
 
-<<<<<<< HEAD
     private void fetchPhimDetails(int maPhim) {
         PhimDAO phimDAO = new PhimDAO();
         phimDAO.getPhimById(maPhim, new PhimDAO.PhimByIdCallback() {
@@ -331,51 +311,13 @@ public class ChiTietPhimActivity extends AppCompatActivity {
                 fetchDanhGiaPhim(phim.getMaPhim());
                 checkFavoriteStatus(phim.getMaPhim(), maNguoiDung);
             }
-=======
->>>>>>> origin/main
 
-private void fetchPhimDetails(int maPhim) {
-    PhimDAO phimDAO = new PhimDAO();
-    TapPhimDAO tapPhimDAO=new TapPhimDAO();
-    tapPhimDAO.getTapPhim(maPhim,new TapPhimDAO.ListTapPhimCallback() {
-        @Override
-        public void onSuccess(List<TapPhim> tapPhimList) {
-            if (tapPhimList.isEmpty()) {
-                playFlim.setEnabled(false);
-                playFlim.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(ChiTietPhimActivity.this, R.color.grey)));
-            } else {
-                playFlim.setEnabled(true);
+            @Override
+            public void onFailure(String error) {
+                Toast.makeText(ChiTietPhimActivity.this, "Không thể lấy thông tin phim", Toast.LENGTH_SHORT).show();
             }
-            phimDAO.getPhimById(maPhim, new PhimDAO.PhimByIdCallback() {
-                @Override
-                public void onSuccess(Phim phim) {
-                    titleTextView.setText(phim.getTieuDe());
-                    descriptionTextView.setText(phim.getMoTa());
-                    Glide.with(ChiTietPhimActivity.this).load(phim.getBanner()).into(posterImageView);
-                    if (phim.getMoTa() == null || phim.getMoTa().isEmpty()) {
-                        tvReadMore.setVisibility(View.GONE);
-                        descriptionTextView.setText("Không có mô tả cho phim này.");
-                    } else {
-                        descriptionTextView.setText(phim.getMoTa());
-                        tvReadMore.setVisibility(View.VISIBLE);
-                    }
-                    fetchTheLoaiPhim(phim.getMaPhim());
-                    fetchDanhGiaPhim(phim.getMaPhim());
-                }
-
-                @Override
-                public void onFailure(String error) {
-                    Toast.makeText(ChiTietPhimActivity.this, "Không thể lấy thông tin phim", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-
-        @Override
-        public void onFailure(String error) {
-            Toast.makeText(ChiTietPhimActivity.this, "Lỗi: " + error, Toast.LENGTH_SHORT).show();
-        }
-    });
-}
+        });
+    }
 
     private void fetchTheLoaiPhim(int maPhim) {
         PhimDAO phimDAO = new PhimDAO();
@@ -412,7 +354,7 @@ private void fetchPhimDetails(int maPhim) {
                         averageRating += danhGia.getDanhGia();
                     }
                     averageRating /= danhGiaList.size();
-                    ratingTextView.setText("Đánh giá: " + String.format(Locale.getDefault(), "%.1f", averageRating) + "/5.0");
+                    ratingTextView.setText("Đánh giá: " + String.format(Locale.getDefault(), "%.1f", averageRating) + "/5");
                     movieRatingBar.setRating((float) averageRating);
                 } else {
                     ratingTextView.setText("Chưa có đánh giá");

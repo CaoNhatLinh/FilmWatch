@@ -1,5 +1,6 @@
 package com.appxemphim.Api;
 import com.appxemphim.data.BinhLuan;
+import com.appxemphim.data.ChangePasswordRequest;
 import com.appxemphim.data.LoginRequest;
 import com.appxemphim.data.NguoiDung;
 import com.appxemphim.data.Phim;
@@ -22,7 +23,6 @@ import retrofit2.http.GET;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
 
 public interface ApiClient {
 
@@ -66,8 +66,6 @@ public interface ApiClient {
     //Tap phim
     @GET("api/tapphim/{id}")
     Call<List<TapPhim>> getListTapPhim(@Path("id") int MaPhim);
-    @GET("api/tapphim/xemphim/{matapphim}")
-    Call<TapPhim> getTapPhim(@Path("matapphim") int MaTapPhim);
     //Nguoi dung
     @GET("api/nguoidung/{id}")
     Call<NguoiDung> getProfileById(@Path("id") int MaNguoiDung);
@@ -75,11 +73,6 @@ public interface ApiClient {
     Call<NguoiDung> getProfileByTenDangNhap(@Path("TenDangNhap") String TenDangNhap);
     @PUT("api/nguoidung/{id}")
     Call<NguoiDung> editNguoiDung(@Path("id") int MaNguoiDung, @Body NguoiDung nguoidung);
-    @GET("api/phim_nguoidung/MaNguoiDung/{maNguoiDung}")
-    Call<List<Phim_NguoiDung>> getHistory(@Path("maNguoiDung") int maNguoiDung);
-
-
-
     //Triệu thêm
     // Đăng nhập
     //Nguoi dung
@@ -88,18 +81,9 @@ public interface ApiClient {
 
     @POST("api/nguoidung/register") // Địa chỉ endpoint cho đăng ký
     Call<Void> register(@Body NguoiDung registerRequest);
-
-
-
-    // Tìm kiếm phim theo tiêu đề
-    @GET("api/phim/search1/{title}")
-    Call<List<Phim>> searchPhimByTitle(@Path("title") String title);
-
-
     @GET("api/phim/{id}")
     Call<Phim> getPhimById(@Path("id") int id);
 
-<<<<<<< HEAD
     // Thay đổi mật khẩu
     @POST("api/nguoidung/change-password")
     Call<Void> changePassword(@Body ChangePasswordRequest changePasswordRequest);
@@ -128,8 +112,6 @@ public interface ApiClient {
 //    @DELETE("api/YeuThich/{maNguoiDung}/{maPhim}")
 //    Call<Void> deleteYeuThich(@Path("maNguoiDung") int maNguoiDung, @Path("maPhim") int maPhim);
 
-=======
->>>>>>> origin/main
     // Lấy danh sách đánh giá của phim theo ID phim
     @GET("api/phim/{phimId}/danhgia")
     Call<List<DanhGia>> getDanhGiaPhim(@Path("phimId") int phimId);
@@ -145,9 +127,7 @@ public interface ApiClient {
     Call<List<BinhLuan>> getBinhLuanPhim(@Path("phimId") int phimId);
     @POST("api/phim/{phimId}/comments")
     Call<Void> sendBinhLuanPhim(@Path("phimId") int phimId, @Body BinhLuan binhLuan);
-    @POST("api/danhgia/ThemDanhGia")
-    Call<Void> sendDanhGiaPhim(@Body DanhGia danhGia);
-    @PUT("api/danhgia/{maDanhGia}")
-    Call<Void> updateDanhGiaPhim(@Path("maDanhGia") int MaDanhGia, @Body DanhGia danhGia);
+
+    Call<List<Phim_NguoiDung>> getHistory(int maNguoidung);
 }
 

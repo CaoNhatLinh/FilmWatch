@@ -12,14 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 
 import com.appxemphim.Api.ApiType;
 import com.appxemphim.R;
 import com.appxemphim.Utils.ItemClickSupport;
 import com.appxemphim.Utils.Utils;
 import com.appxemphim.activities.ChiTietPhimActivity;
-import com.appxemphim.activities.SearchActivity;
 import com.appxemphim.activities.SharedListPhimActivity;
 import com.appxemphim.adapters.BannerAdapter;
 import com.appxemphim.adapters.ListPhimAdapter;
@@ -99,17 +97,9 @@ public class HomeFragment extends Fragment {
         rvPhimHanHot.setAdapter(phimHanHotAdapter);
         rvAnime.setAdapter(animeAdapter);
         rvLove.setAdapter(loveAdapter);
+
         loadList();
-        EditText etTimKiem = view.findViewById(R.id.etTimKiem);
-        etTimKiem.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    Intent intent = new Intent(getActivity(), SearchActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
+
         return view;
     }
 
