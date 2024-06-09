@@ -1,7 +1,9 @@
 package com.appxemphim.activities;
 //triệu
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -72,8 +74,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onSuccess(NguoiDung nguoiDung) {
                 // Đăng nhập thành công, xử lý logic tiếp theo ở đây (ví dụ: chuyển sang màn hình chính)
                 Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-
-                startActivity(new Intent(LoginActivity.this, TrangChuActivity.class));
+                int userId = nguoiDung.getMaNguoiDung();
+                Intent intent = new Intent(LoginActivity.this, TrangChuActivity.class);
+                intent.putExtra("userId", userId);
+                startActivity(intent);
                 finish();
             }
 

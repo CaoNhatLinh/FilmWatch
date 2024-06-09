@@ -28,6 +28,7 @@ public class ChiTietPhimActivity extends AppCompatActivity {
     private boolean isExpanded = false;
     private String initialDescription;
     private RatingBar movieRatingBar;
+    private int maNguoiDung;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class ChiTietPhimActivity extends AppCompatActivity {
         genreTextView = findViewById(R.id.movieGenre);
         ratingTextView = findViewById(R.id.movieRating);
         movieRatingBar = findViewById(R.id.movieRatingBar);
-
+        maNguoiDung = getIntent().getIntExtra("userId", -1);
         int maPhim = getIntent().getIntExtra("MaPhim", -1);
         if (maPhim != -1) {
             fetchPhimDetails(maPhim);
@@ -78,7 +79,7 @@ public class ChiTietPhimActivity extends AppCompatActivity {
 
         movieRatingBar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
             if (fromUser) {
-                int maNguoiDung = getCurrentUserID();
+//                int maNguoiDung = getCurrentUserID();
                 if (maNguoiDung != -1) {
                     checkAndSendRatingToServer(maPhim, rating);
                 }
@@ -86,13 +87,7 @@ public class ChiTietPhimActivity extends AppCompatActivity {
         });
     }
 
-    private int getCurrentUserID() {
-        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        return sharedPreferences.getInt("userId", -1);
-    }
-
     private void checkAndSendRatingToServer(int maPhim, float rating) {
-        int maNguoiDung = getCurrentUserID();
         if (maNguoiDung == -1) {
             Toast.makeText(this, "Không thể lấy mã người dùng. Vui lòng đăng nhập lại.", Toast.LENGTH_SHORT).show();
             return;
