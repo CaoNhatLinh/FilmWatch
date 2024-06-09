@@ -3,6 +3,7 @@ import com.appxemphim.data.BinhLuan;
 import com.appxemphim.data.LoginRequest;
 import com.appxemphim.data.NguoiDung;
 import com.appxemphim.data.Phim;
+import com.appxemphim.data.Phim_NguoiDung;
 import com.appxemphim.data.TapPhim;
 import com.appxemphim.data.TheLoai;
 import com.google.gson.Gson;
@@ -19,6 +20,7 @@ import retrofit2.http.GET;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface ApiClient {
 
@@ -71,6 +73,11 @@ public interface ApiClient {
     Call<NguoiDung> getProfileByTenDangNhap(@Path("TenDangNhap") String TenDangNhap);
     @PUT("api/nguoidung/{id}")
     Call<NguoiDung> editNguoiDung(@Path("id") int MaNguoiDung, @Body NguoiDung nguoidung);
+    @GET("api/phim_nguoidung/MaNguoiDung/{maNguoiDung}")
+    Call<List<Phim_NguoiDung>> getHistory(@Path("maNguoiDung") int maNguoiDung);
+
+
+
     //Triệu thêm
     // Đăng nhập
     //Nguoi dung
@@ -105,7 +112,7 @@ public interface ApiClient {
     Call<List<BinhLuan>> getBinhLuanPhim(@Path("phimId") int phimId);
     @POST("api/phim/{phimId}/comments")
     Call<Void> sendBinhLuanPhim(@Path("phimId") int phimId, @Body BinhLuan binhLuan);
-    @POST("api/danhgia")
+    @POST("api/danhgia/ThemDanhGia")
     Call<Void> sendDanhGiaPhim(@Body DanhGia danhGia);
     @PUT("api/danhgia/{maDanhGia}")
     Call<Void> updateDanhGiaPhim(@Path("maDanhGia") int MaDanhGia, @Body DanhGia danhGia);

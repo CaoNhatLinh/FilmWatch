@@ -176,7 +176,8 @@ public class PhimDAO {
         });
     }
     public void sendDanhGiaPhim(int maPhim, int maNguoiDung, float rating, SendDanhGiaCallback callback) {
-        DanhGia danhGia = new DanhGia( maNguoiDung, maPhim, rating, new Date());
+        
+        DanhGia danhGia = new DanhGia(maNguoiDung, maPhim, rating, new Date());
         Call<Void> call = apiClient.sendDanhGiaPhim(danhGia);
         call.enqueue(new Callback<Void>() {
             @Override
