@@ -62,6 +62,8 @@ public interface ApiClient {
     //Tap phim
     @GET("api/tapphim/{id}")
     Call<List<TapPhim>> getListTapPhim(@Path("id") int MaPhim);
+    @GET("api/tapphim/xemphim/{matapphim}")
+    Call<TapPhim> getTapPhim(@Path("matapphim") int MaTapPhim);
     //Nguoi dung
     @GET("api/nguoidung/{id}")
     Call<NguoiDung> getProfileById(@Path("id") int MaNguoiDung);
