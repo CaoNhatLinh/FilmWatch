@@ -9,22 +9,11 @@ public class NguoiDung {
 
     private  String Email;
     private String MatKhau;
-
-    public String getMaQuyen() {
-        return MaQuyen;
-    }
-
-    public void setMaQuyen(String maQuyen) {
-        MaQuyen = maQuyen;
-    }
-
-    private String MaQuyen;
     public NguoiDung( String tenDangNhap, String matKhau, String email) {
 
         TenDangNhap = tenDangNhap;
         MatKhau = matKhau;
         Email = email;
-        MaQuyen="Client";
 
     }
     public NguoiDung( int id ,String hoten, String tenDangNhap,String email) {
@@ -119,7 +108,6 @@ public class NguoiDung {
         NgaySinh = ngaySinh;
         AnhDaiDien = anhDaiDien;
         NgayDangKy = ngayDangKy;
-        MaQuyen="Client";
 
     }
 

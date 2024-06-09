@@ -20,7 +20,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText editTextEmailOrUsername;
     private EditText editTextPassword;
-    private  TextView tvQuenMK;
     private Button buttonLogin;
 
     //đăng ký
@@ -37,7 +36,6 @@ public class LoginActivity extends AppCompatActivity {
 
         editTextEmailOrUsername = findViewById(R.id.editTextEmailOrUsername);
         editTextPassword = findViewById(R.id.editTextPassword);
-        tvQuenMK = findViewById(R.id.tvQuenMK);
         buttonLogin = findViewById(R.id.buttonLogin);
 
         // Ánh xạ TextView tvDK từ layout
@@ -52,16 +50,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        // Thêm sự kiện click cho tvDK
-        tvQuenMK.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Chuyển từ LoginActivity sang RegisterActivity
-                Intent intent = new Intent(LoginActivity.this, ChangePasswordActivity.class);
-                startActivity(intent);
-            }
-        });
-
         // thêm sự kiện đăng nhập
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
