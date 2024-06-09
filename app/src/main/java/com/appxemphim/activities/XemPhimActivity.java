@@ -47,8 +47,6 @@ public class XemPhimActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_xem_phim);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         playerView = findViewById(R.id.videoView);
         tapPhimDAO = new TapPhimDAO();
         maPhim = getIntent().getIntExtra("MaPhim", -1);
@@ -73,45 +71,6 @@ public class XemPhimActivity extends AppCompatActivity {
         super.onStop();
         releasePlayer();
     }
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        ViewGroup.LayoutParams layoutParams = playerView.getLayoutParams();
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            playerView.setLayoutParams(new ConstraintLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT
-            ));
-            Toast.makeText(XemPhimActivity.this, "Vừa xoay màn hình ", Toast.LENGTH_SHORT).show();
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-
-            playerView.setLayoutParams(new ConstraintLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    layoutParams.height = getResources().getDimensionPixelSize(R.dimen.player_height)
-            ));
-        }
-
-    }
-    ViewTreeObserver.OnGlobalLayoutListener listener = new ViewTreeObserver.OnGlobalLayoutListener() {
-        @Override
-        public void onGlobalLayout() {
-            int width = playerView.getWidth();
-            int height = playerView.getHeight();
-            ViewGroup.LayoutParams layoutParams = playerView.getLayoutParams();
-            if (width > height) {
-                playerView.setLayoutParams(new ConstraintLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT
-                ));
-                Toast.makeText(XemPhimActivity.this, "Vừa xoay màn hình ", Toast.LENGTH_SHORT).show();
-            } else {
-                playerView.setLayoutParams(new ConstraintLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        layoutParams.height = getResources().getDimensionPixelSize(R.dimen.player_height)
-                ));
-            }
-        }
-    };
 
     private void initializePlayer(String videoUrl) {
         if (!isPlayerInitialized) {
@@ -195,7 +154,6 @@ public class XemPhimActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(TapPhim tapPhim) {
                         releasePlayer();
-
                         loadThongTinTapPhim(tapPhim.getMaTapPhim());
 
                     }

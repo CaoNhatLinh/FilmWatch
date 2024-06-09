@@ -1,5 +1,6 @@
 package com.appxemphim.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -10,10 +11,12 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.appxemphim.Api.ApiClient;
 
 import com.appxemphim.R;
+import com.appxemphim.Utils.ItemClickSupport;
 import com.appxemphim.adapters.CustomListAdapter;
 import com.appxemphim.data.Phim;
 
@@ -28,8 +31,8 @@ public class SearchActivity extends AppCompatActivity {
     private EditText searchEditText;
     private Button searchButton;
     private ListView listView;
-    private ArrayAdapter<String> adapter;
-    private List<String> movieTitles;
+    private ArrayAdapter<Phim> adapter;
+    private List<Phim> movieTitles;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,7 +67,7 @@ public class SearchActivity extends AppCompatActivity {
                     List<Phim> movies = response.body();
                     movieTitles.clear();
                     for (Phim phim : movies) {
-                        movieTitles.add(phim.getTieuDe());
+                        movieTitles.add(phim);
                     }
                     adapter.notifyDataSetChanged();
                 } else {

@@ -15,11 +15,11 @@ import com.appxemphim.data.Phim;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-public class CustomListAdapter extends ArrayAdapter<String> {
+public class CustomListAdapter extends ArrayAdapter<Phim> {
     private Context context;
     private List<Phim> phimList;
 
-    public CustomListAdapter(Context context, int resource, List<String> objects) {
+    public CustomListAdapter(Context context, int resource, List<Phim> objects) {
         super(context, resource, objects);
         this.context = context;
         this.phimList = phimList;
@@ -32,24 +32,15 @@ public class CustomListAdapter extends ArrayAdapter<String> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_layout, parent, false);
         }
 
-        String movieTitle = getItem(position);
+        Phim movieTitle = getItem(position);
 
         ImageView imageView = convertView.findViewById(R.id.image);
         TextView textView = convertView.findViewById(R.id.textView);
 
-        // Kiểm tra xem danh sách phim có null không
-        if (phimList != null && position < phimList.size()) {
-            // Lấy đối tượng Phim tương ứng với vị trí hiện tại
-            Phim phim = phimList.get(position);
-
-            // Load image into ImageView using Picasso
-            Picasso.with(context)
-                    .load(phim.getAnhBia())
-                    .into(imageView);
-        }
-
-        // Set text to TextView
-        textView.setText(movieTitle);
+        Picasso.with(context)
+                .load(movieTitle.getAnhBia())
+                .into(imageView);
+        textView.setText(movieTitle.getTieuDe());
 
         return convertView;
     }

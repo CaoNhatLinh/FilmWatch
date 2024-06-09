@@ -98,18 +98,17 @@ public class HomeFragment extends Fragment {
         rvPhimHanHot.setAdapter(phimHanHotAdapter);
         rvAnime.setAdapter(animeAdapter);
         rvLove.setAdapter(loveAdapter);
-
         loadList();
         EditText etTimKiem = view.findViewById(R.id.etTimKiem);
-        etTimKiem.setOnClickListener(new View.OnClickListener() {
+        etTimKiem.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onClick(View v) {
-                // Tạo Intent để chuyển hướng từ Fragment này sang SearchActivity
-                Intent intent = new Intent(getActivity(), SearchActivity.class);
-                startActivity(intent);
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    Intent intent = new Intent(getActivity(), SearchActivity.class);
+                    startActivity(intent);
+                }
             }
         });
-
         return view;
     }
 
