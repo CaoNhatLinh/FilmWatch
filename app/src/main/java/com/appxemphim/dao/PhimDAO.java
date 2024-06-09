@@ -231,9 +231,33 @@ public class PhimDAO {
             }
         });
     }
+    public void sendBinhLuanPhim(int maPhim, int maNguoiDung, String noiDung, final SendBinhLuanCallback callback) {
+        BinhLuan binhLuan = new BinhLuan(maPhim, maNguoiDung, noiDung); // Gán mã phim và mã người dùng vào đối tượng binhLuan
+        Call<Void> call = apiClient.sendBinhLuanPhim(maPhim, binhLuan);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess();
+                } else {
+                    callback.onFailure("Server returned: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                callback.onFailure(t.getMessage());
+            }
+        });
+    }
+
     public interface BinhLuanCallback {
         void onSuccess(List<BinhLuan> binhLuanList);
         void onFailure(String message);
+    }
+    public interface SendBinhLuanCallback {
+        void onSuccess();
+        void onFailure(String error);
     }
 
     public interface PhimCallback {

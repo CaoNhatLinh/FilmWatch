@@ -92,6 +92,7 @@ public class LoginActivity extends AppCompatActivity {
                 int userId = nguoiDung.getMaNguoiDung();
                 Intent intent = new Intent(LoginActivity.this, TrangChuActivity.class);
                 intent.putExtra("userId", userId);
+                saveUserIdToSharedPreferences(nguoiDung.getMaNguoiDung());
                 startActivity(intent);
                 finish();
             }
@@ -103,5 +104,10 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
+    private void saveUserIdToSharedPreferences(int userId) {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("userId", userId);
+        editor.apply();
+    }
 }

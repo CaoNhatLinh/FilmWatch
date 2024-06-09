@@ -28,7 +28,7 @@ public class ChiTietPhimActivity extends AppCompatActivity {
     private boolean isExpanded = false;
     private String initialDescription;
     private RatingBar movieRatingBar;
-    private int maNguoiDung;
+    private int maNguoiDung,maPhim;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +42,7 @@ public class ChiTietPhimActivity extends AppCompatActivity {
         genreTextView = findViewById(R.id.movieGenre);
         ratingTextView = findViewById(R.id.movieRating);
         movieRatingBar = findViewById(R.id.movieRatingBar);
-        maNguoiDung = getIntent().getIntExtra("userId", -1);
-        int maPhim = getIntent().getIntExtra("MaPhim", -1);
+        maPhim = getIntent().getIntExtra("MaPhim", -1);
         if (maPhim != -1) {
             fetchPhimDetails(maPhim);
         } else {
@@ -79,7 +78,7 @@ public class ChiTietPhimActivity extends AppCompatActivity {
 
         movieRatingBar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
             if (fromUser) {
-//                int maNguoiDung = getCurrentUserID();
+                maNguoiDung=getCurrentUserID();
                 if (maNguoiDung != -1) {
                     checkAndSendRatingToServer(maPhim, rating);
                 }
@@ -87,7 +86,9 @@ public class ChiTietPhimActivity extends AppCompatActivity {
         });
     }
 
+
     private void checkAndSendRatingToServer(int maPhim, float rating) {
+        maNguoiDung=getCurrentUserID();
         if (maNguoiDung == -1) {
             Toast.makeText(this, "Không thể lấy mã người dùng. Vui lòng đăng nhập lại.", Toast.LENGTH_SHORT).show();
             return;
@@ -110,7 +111,10 @@ public class ChiTietPhimActivity extends AppCompatActivity {
             }
         });
     }
-
+    private int getCurrentUserID() {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        return sharedPreferences.getInt("userId", -1);
+    }
     private void updateRatingOnServer(int maPhim, int maNguoiDung, float rating) {
         PhimDAO phimDAO = new PhimDAO();
         phimDAO.updateDanhGiaPhim(maPhim, maNguoiDung, rating, new PhimDAO.UpdateDanhGiaCallback() {
@@ -238,7 +242,7 @@ public class ChiTietPhimActivity extends AppCompatActivity {
                         averageRating += danhGia.getDanhGia();
                     }
                     averageRating /= danhGiaList.size();
-                    ratingTextView.setText("Đánh giá: " + String.format(Locale.getDefault(), "%.1f", averageRating) + "/10");
+                    ratingTextView.setText("Đánh giá: " + String.format(Locale.getDefault(), "%.1f", averageRating) + "/5");
                     movieRatingBar.setRating((float) averageRating);
                 } else {
                     ratingTextView.setText("Chưa có đánh giá");

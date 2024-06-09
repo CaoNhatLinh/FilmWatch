@@ -20,6 +20,12 @@ public class BinhLuan {
         this.NgayBinhLuan = ngayBinhLuan;
     }
 
+    public BinhLuan(int maPhim, String noiDung) {
+    }
+
+    public BinhLuan(int maPhim, int maNguoiDung, String noiDung) {
+    }
+
     public int getMaBinhLuan() {
         return MaBinhLuan;
     }
