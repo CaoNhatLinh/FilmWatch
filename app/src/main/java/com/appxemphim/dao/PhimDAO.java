@@ -176,8 +176,8 @@ public class PhimDAO {
         });
     }
     public void sendDanhGiaPhim(int maPhim, int maNguoiDung, float rating, SendDanhGiaCallback callback) {
-        DanhGia danhGia = new DanhGia(0, maNguoiDung, maPhim, rating, new Date());
-        Call<Void> call = apiClient.sendDanhGiaPhim(maPhim, danhGia);
+        DanhGia danhGia = new DanhGia( maNguoiDung, maPhim, rating, new Date());
+        Call<Void> call = apiClient.sendDanhGiaPhim(danhGia);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -194,9 +194,9 @@ public class PhimDAO {
             }
         });
     }
-    public void updateDanhGiaPhim(int maPhim, int maNguoiDung, float rating, final UpdateDanhGiaCallback callback) {
-        DanhGia danhGia = new DanhGia(0, maNguoiDung, maPhim, rating, new Date());
-        Call<Void> call = apiClient.updateDanhGiaPhim(maPhim, maNguoiDung, danhGia);
+    public void updateDanhGiaPhim(int maDanhGia, int maPhim, int maNguoiDung, float rating, final UpdateDanhGiaCallback callback) {
+        DanhGia danhGia = new DanhGia(maNguoiDung, maPhim, rating, new Date());
+        Call<Void> call = apiClient.updateDanhGiaPhim(maDanhGia, danhGia);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -213,6 +213,7 @@ public class PhimDAO {
             }
         });
     }
+
     public void getBinhLuanPhim(int phimId, final BinhLuanCallback callback) {
         Call<List<BinhLuan>> call = apiClient.getBinhLuanPhim(phimId);
         call.enqueue(new Callback<List<BinhLuan>>() {

@@ -95,5 +95,9 @@ public interface ApiClient {
     Call<List<BinhLuan>> getBinhLuanPhim(@Path("phimId") int phimId);
     @POST("api/phim/{phimId}/comments")
     Call<Void> sendBinhLuanPhim(@Path("phimId") int phimId, @Body BinhLuan binhLuan);
+    @POST("api/danhgia")
+    Call<Void> sendDanhGiaPhim(@Body DanhGia danhGia);
+    @PUT("api/danhgia/{maDanhGia}")
+    Call<Void> updateDanhGiaPhim(@Path("maDanhGia") int MaDanhGia, @Body DanhGia danhGia);
 }
 
