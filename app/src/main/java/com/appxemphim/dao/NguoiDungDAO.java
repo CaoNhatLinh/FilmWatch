@@ -113,6 +113,25 @@ public class NguoiDungDAO {
         });
     }
 
+    public void editNguoiDung(int id,NguoiDung nguoiDung, final NguoiDungCallback callback) {
+        Call<NguoiDung> call = apiClient.editNguoiDung(id,nguoiDung);
+        call.enqueue(new Callback<NguoiDung>() {
+            @Override
+            public void onResponse(Call<NguoiDung> call, Response<NguoiDung> response) {
+                if (response.isSuccessful()) {
+                    NguoiDung nguoiDung1 = response.body();
+                    callback.onSuccess(nguoiDung1);
+                } else {
+                    callback.onFailure("Failed to edit: " + response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<NguoiDung> call, Throwable t) {
+                callback.onFailure(t.getMessage());
+            }
+        });
+    }
+
     public interface RegisterCallback {
         void onSuccess();
         void onFailure(String message);

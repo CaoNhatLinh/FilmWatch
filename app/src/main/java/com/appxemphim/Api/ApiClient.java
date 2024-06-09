@@ -4,6 +4,7 @@ import com.appxemphim.data.ChangePasswordRequest;
 import com.appxemphim.data.LoginRequest;
 import com.appxemphim.data.NguoiDung;
 import com.appxemphim.data.Phim;
+import com.appxemphim.data.TapPhim;
 import com.appxemphim.data.TheLoai;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -58,12 +59,17 @@ public interface ApiClient {
     Call<List<Phim>> getListTopLove();
     @GET("api/phim/love")
     Call<List<Phim>> getAllListLove();
+
+    //Tap phim
+    @GET("api/tapphim/{id}")
+    Call<List<TapPhim>> getListTapPhim(@Path("id") int MaPhim);
     //Nguoi dung
     @GET("api/nguoidung/{id}")
     Call<NguoiDung> getProfileById(@Path("id") int MaNguoiDung);
     @GET("api/nguoidung/profile/{TenDangNhap}")
     Call<NguoiDung> getProfileByTenDangNhap(@Path("TenDangNhap") String TenDangNhap);
-    
+    @PUT("api/nguoidung/{id}")
+    Call<NguoiDung> editNguoiDung(@Path("id") int MaNguoiDung, @Body NguoiDung nguoidung);
     //Triệu thêm
     // Đăng nhập
     //Nguoi dung

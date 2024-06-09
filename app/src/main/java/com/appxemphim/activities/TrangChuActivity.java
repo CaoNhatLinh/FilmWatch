@@ -1,4 +1,5 @@
 package com.appxemphim.activities;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.DrawableContainer;
@@ -6,6 +7,8 @@ import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -59,8 +62,13 @@ public class TrangChuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (flag != profileLayout.getId()) {
+                    int maNguoiDung=getCurrentUserID();
+                    if (maNguoiDung == -1) {
+                        Toast.makeText(TrangChuActivity.this, "Không thể lấy mã người dùng. Vui lòng đăng nhập lại.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     Bundle bundle = new Bundle();
-                    bundle.putInt("MaNguoiDung", 1);
+                    bundle.putInt("MaNguoiDung", maNguoiDung);
                     Fragment fragmentProfile = new ProfileFragment();
                     fragmentProfile.setArguments(bundle);
                     replaceFragment(fragmentProfile);
@@ -70,7 +78,10 @@ public class TrangChuActivity extends AppCompatActivity {
             }
         });
     }
-
+    private int getCurrentUserID() {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        return sharedPreferences.getInt("userId", -1);
+    }
     private void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragmentContainerView, fragment);
