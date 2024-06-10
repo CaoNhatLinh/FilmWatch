@@ -23,7 +23,7 @@ import retrofit2.http.GET;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.POST;
-
+import retrofit2.http.Query;
 public interface ApiClient {
 
     Gson gson = new GsonBuilder()
@@ -62,7 +62,8 @@ public interface ApiClient {
     Call<List<Phim>> getListTopLove();
     @GET("api/phim/love")
     Call<List<Phim>> getAllListLove();
-
+    @GET("api/tapphim/xemphim/{matapphim}")
+    Call<TapPhim> getTapPhim(@Path("matapphim") int MaTapPhim);
     //Tap phim
     @GET("api/tapphim/{id}")
     Call<List<TapPhim>> getListTapPhim(@Path("id") int MaPhim);
@@ -78,7 +79,8 @@ public interface ApiClient {
     //Nguoi dung
     @POST("api/nguoidung/login")
     Call<NguoiDung> login(@Body LoginRequest loginRequest);
-
+    @GET("api/phim/search1/{title}")
+    Call<List<Phim>> searchPhimByTitle(@Path("title") String title);
     @POST("api/nguoidung/register") // Địa chỉ endpoint cho đăng ký
     Call<Void> register(@Body NguoiDung registerRequest);
     @GET("api/phim/{id}")
