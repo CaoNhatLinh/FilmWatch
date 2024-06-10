@@ -130,8 +130,8 @@ public interface ApiClient {
     Call<List<TheLoai>> getTheLoaiPhim(@Path("phimId") int phimId);
     @POST("api/danhgia")
     Call<Void> sendDanhGiaPhim(@Body DanhGia danhGia);
-    @PUT("api/danhgia/{id}")
-    Call<Void> updateDanhGiaPhim(@Path("id") int maDanhGia,@Body DanhGia danhGia);
+    @PUT("api/danhgia/{MaDanhGia}")
+    Call<Void> updateDanhGiaPhim(@Path("MaDanhGia") int MaDanhGia,@Body DanhGia danhGia);
     @GET("api/phim/{phimId}/comments")
     Call<List<BinhLuan>> getBinhLuanPhim(@Path("phimId") int phimId);
     @POST("api/phim/{phimId}/comments")

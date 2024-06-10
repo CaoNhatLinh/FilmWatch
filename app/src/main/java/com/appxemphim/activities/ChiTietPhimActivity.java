@@ -217,6 +217,7 @@ public class ChiTietPhimActivity extends AppCompatActivity {
                         userHasRated = true;
                         maDanhGia = danhGia.getMaDanhGia();
                         updateRatingOnServer(maDanhGia, maNguoiDung, maPhim, rating);
+//                        Toast.makeText(ChiTietPhimActivity.this, "cập nhật.", Toast.LENGTH_SHORT).show();
                         break;
                     }
                 }
@@ -227,7 +228,7 @@ public class ChiTietPhimActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(String error) {
-                Toast.makeText(ChiTietPhimActivity.this, "Lỗi: " + error, Toast.LENGTH_SHORT).show();
+                sendRatingToServer(maNguoiDung,maPhim, rating);
             }
         });
     }
@@ -259,7 +260,7 @@ public class ChiTietPhimActivity extends AppCompatActivity {
                     Toast.makeText(ChiTietPhimActivity.this, "Đánh giá của bạn đã được cập nhật", Toast.LENGTH_SHORT).show();
                     fetchDanhGiaPhim(maPhim);
                 } else {
-                    Toast.makeText(ChiTietPhimActivity.this, "Không thể cập nhật đánh giá của bạn", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChiTietPhimActivity.this, "Không thể cập nhật đánh giá của bạn"+response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
 
