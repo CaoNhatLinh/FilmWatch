@@ -38,13 +38,9 @@
         <!-- Yêu thích Button -->
         <ImageView
             android:id="@+id/favoriteButton"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:src="@drawable/ic_favorite_outline"
-            android:padding="3dp"
-
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/linearLayout3"
             android:clickable="true"
@@ -139,26 +135,33 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/ratingLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Đánh giá của bạn"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:layout_gravity="center_horizontal" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="16dp"
+                android:orientation="horizontal">
 
-            <RatingBar
-                android:id="@+id/movieRatingBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:numStars="5"
-                android:stepSize="1"
-                android:rating="0"
-                android:layout_gravity="center_horizontal"
-                android:scaleX="0.7"
-                android:scaleY="0.7"
-                android:progressTint="@color/yellow" />
+                <TextView
+                    android:id="@+id/ratingLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Đánh giá của bạn"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <RatingBar
+                    android:id="@+id/movieRatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:numStars="5"
+                    android:progressTint="@color/yellow"
+                    android:rating="0"
+                    android:scaleX="0.6"
+                    android:scaleY="0.6"
+                    android:stepSize="1" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/movieDescription"
