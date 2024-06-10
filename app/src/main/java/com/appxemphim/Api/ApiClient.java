@@ -130,6 +130,7 @@ public interface ApiClient {
     @POST("api/phim/{phimId}/comments")
     Call<Void> sendBinhLuanPhim(@Path("phimId") int phimId, @Body BinhLuan binhLuan);
 
-    Call<List<Phim_NguoiDung>> getHistory(int maNguoidung);
+    @GET("api/phim_nguoidung/MaNguoiDung/{maNguoiDung}")
+    Call<List<Phim_NguoiDung>> getHistory(@Path("maNguoiDung") int maNguoiDung);
 }
 
