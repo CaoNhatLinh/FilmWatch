@@ -124,7 +124,7 @@ public interface ApiClient {
     @POST("api/phim/{phimId}/danhgia")
     Call<Void> sendDanhGiaPhim(@Path("phimId") int phimId, @Body DanhGia danhGia);
     @PUT("api/phim/{phimId}/danhgia/{userId}")
-    Call<Void> updateDanhGiaPhim(@Path("phimId") int phimId, @Path("userId") int userId, @Body DanhGia danhGia);
+    Call<Void> updateDanhGiaPhim(@Path("phimId") int phimId, @Path("userId") int userId, @Body float danhGia);
     @GET("api/phim/{phimId}/comments")
     Call<List<BinhLuan>> getBinhLuanPhim(@Path("phimId") int phimId);
     @POST("api/phim/{phimId}/comments")
