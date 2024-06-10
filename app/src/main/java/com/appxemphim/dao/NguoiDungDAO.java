@@ -3,6 +3,7 @@ package com.appxemphim.dao;
 import android.util.Log;
 
 import com.appxemphim.Api.ApiClient;
+import com.appxemphim.data.ChangePasswordRequest;
 import com.appxemphim.data.NguoiDung;
 import com.appxemphim.data.LoginRequest;
 
@@ -126,6 +127,34 @@ public class NguoiDungDAO {
                 callback.onFailure(t.getMessage());
             }
         });
+    }
+
+    public void changePassword(String emailOrUsername, String oldPassword, String newPassword, final ChangePasswordCallback callback) {
+        ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest(emailOrUsername, oldPassword, newPassword);
+        Call<Void> call = apiClient.changePassword(changePasswordRequest);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess("Đổi mật khẩu thành công");
+                    // Chuyển từ LoginActivity sang RegisterActivity
+
+                } else {
+                    callback.onFailure("Đổi mật khẩu thất bại");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                callback.onFailure("Có lỗi xảy ra: " + t.getMessage());
+            }
+        });
+    }
+
+    public interface ChangePasswordCallback {
+        void onSuccess(String message);
+        void onFailure(String errorMessage);
     }
 
     public interface RegisterCallback {
