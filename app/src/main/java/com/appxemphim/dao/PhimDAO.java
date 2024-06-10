@@ -5,6 +5,7 @@ import com.appxemphim.Api.ApiClient;
 import com.appxemphim.data.BinhLuan;
 import com.appxemphim.Api.ApiType;
 import com.appxemphim.data.Phim;
+import com.appxemphim.data.Phim_NguoiDung;
 import com.appxemphim.data.TheLoai;
 import com.appxemphim.data.DanhGia;
 
@@ -158,42 +159,15 @@ public class PhimDAO {
             }
         });
     }
-    public void sendDanhGiaPhim(int maPhim, int maNguoiDung, float danhGia, final SendDanhGiaCallback callback) {
-        DanhGia danhGiaObj = new DanhGia(maPhim, maNguoiDung, danhGia);
-        Call<Void> call = apiClient.sendDanhGiaPhim(maPhim, danhGiaObj);
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    callback.onSuccess(); // Gọi callback onSuccess nếu thành công
-                } else {
-                    callback.onFailure("Server returned: " + response.code()); // Gọi callback onFailure nếu có lỗi
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                callback.onFailure(t.getMessage()); // Gọi callback onFailure nếu có lỗi
-            }
-        });
+    public void sendDanhGiaPhim(int maPhim,int maNguoiDung,float rating,  Callback<Void> callback) {
+        DanhGia danhGia=new DanhGia(maNguoiDung,maPhim,rating);
+        Call<Void> call = ApiClient.apiClient.sendDanhGiaPhim(danhGia);
+        call.enqueue(callback);
     }
-    public void updateDanhGiaPhim(int phimId, int userId, float newDanhGia, final UpdateDanhGiaCallback callback) {
-        Call<Void> call = apiClient.updateDanhGiaPhim(phimId, userId, newDanhGia);
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    callback.onSuccess();
-                } else {
-                    callback.onFailure("Server returned: " + response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                callback.onFailure(t.getMessage());
-            }
-        });
+    public void updateDanhGiaPhim(int maDanhGia,int maPhim,int maNguoiDung,float rating, Callback<Void> callback) {
+        DanhGia danhGia=new DanhGia(maPhim,maNguoiDung,rating);
+        Call<Void> call = ApiClient.apiClient.updateDanhGiaPhim(maDanhGia,danhGia);
+        call.enqueue(callback);
     }
 
     public void getBinhLuanPhim(int phimId, final BinhLuanCallback callback) {

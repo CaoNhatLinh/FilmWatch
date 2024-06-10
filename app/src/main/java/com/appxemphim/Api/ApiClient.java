@@ -128,10 +128,10 @@ public interface ApiClient {
     // Lấy danh sách thể loại của phim theo ID phim
     @GET("api/phim/{phimId}/theloai")
     Call<List<TheLoai>> getTheLoaiPhim(@Path("phimId") int phimId);
-    @POST("api/phim/{phimId}/danhgia")
-    Call<Void> sendDanhGiaPhim(@Path("phimId") int phimId, @Body DanhGia danhGia);
-    @PUT("api/phim/{phimId}/danhgia/{userId}")
-    Call<Void> updateDanhGiaPhim(@Path("phimId") int phimId, @Path("userId") int userId, @Body float danhGia);
+    @POST("api/danhgia")
+    Call<Void> sendDanhGiaPhim(@Body DanhGia danhGia);
+    @PUT("api/danhgia/{id}")
+    Call<Void> updateDanhGiaPhim(@Path("id") int maDanhGia,@Body DanhGia danhGia);
     @GET("api/phim/{phimId}/comments")
     Call<List<BinhLuan>> getBinhLuanPhim(@Path("phimId") int phimId);
     @POST("api/phim/{phimId}/comments")

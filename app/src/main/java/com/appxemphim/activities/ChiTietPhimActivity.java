@@ -44,7 +44,7 @@ public class ChiTietPhimActivity extends AppCompatActivity {
     private RatingBar movieRatingBar;
     private Button playFlim;
     private ImageView favoriteButton;
-    private int maNguoiDung, maPhim;
+    private int maNguoiDung, maPhim,maDanhGia;
     private boolean isFavorite = false;
 
     @Override
@@ -211,10 +211,17 @@ public class ChiTietPhimActivity extends AppCompatActivity {
         phimDAO.getDanhGiaPhim(maPhim, new PhimDAO.DanhGiaCallback() {
             @Override
             public void onSuccess(List<DanhGia> danhGiaList) {
-                if (!danhGiaList.isEmpty()) {
-                    updateRatingOnServer(maPhim, maNguoiDung, rating);
-                } else {
-                    sendRatingToServer(maPhim, maNguoiDung, rating);
+                boolean userHasRated = false;
+                for (DanhGia danhGia : danhGiaList) {
+                    if (danhGia.getMaNguoiDung() == maNguoiDung) {
+                        userHasRated = true;
+                        maDanhGia = danhGia.getMaDanhGia();
+                        updateRatingOnServer(maDanhGia, maNguoiDung, maPhim, rating);
+                        break;
+                    }
+                }
+                if (!userHasRated) {
+                    sendRatingToServer(maNguoiDung,maPhim, rating);
                 }
             }
 
@@ -224,61 +231,50 @@ public class ChiTietPhimActivity extends AppCompatActivity {
             }
         });
     }
+    private void sendRatingToServer( int maPhim,int maNguoiDung,float rating) {
+        PhimDAO phimDAO = new PhimDAO();
+        phimDAO.sendDanhGiaPhim(maPhim,maNguoiDung,rating, new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(ChiTietPhimActivity.this, "Gửi đánh giá thành công!", Toast.LENGTH_SHORT).show();
+                    fetchDanhGiaPhim(maPhim);
+                } else {
+                    Toast.makeText(ChiTietPhimActivity.this, "Gửi đánh giá thất bại!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(ChiTietPhimActivity.this, "Lỗi: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void updateRatingOnServer( int maDanhGia,int maNguoiDung,int maPhim, float rating) {
+        PhimDAO phimDAO = new PhimDAO();
+        phimDAO.updateDanhGiaPhim(maDanhGia, maPhim, maNguoiDung, rating, new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(ChiTietPhimActivity.this, "Đánh giá của bạn đã được cập nhật", Toast.LENGTH_SHORT).show();
+                    fetchDanhGiaPhim(maPhim);
+                } else {
+                    Toast.makeText(ChiTietPhimActivity.this, "Không thể cập nhật đánh giá của bạn", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(ChiTietPhimActivity.this, "Lỗi: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     private int getCurrentUserID() {
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         return sharedPreferences.getInt("userId", -1);
     }
 
-    private void updateRatingOnServer(int maPhim, int maNguoiDung, float rating) {
-        PhimDAO phimDAO = new PhimDAO();
-        phimDAO.updateDanhGiaPhim(maPhim, maNguoiDung, rating, new PhimDAO.UpdateDanhGiaCallback() {
-            @Override
-            public void onSuccess() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(ChiTietPhimActivity.this, "Đã cập nhật đánh giá thành công", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-
-            @Override
-            public void onFailure(String error) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(ChiTietPhimActivity.this, "Lỗi khi cập nhật đánh giá: " + error, Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
-    }
-
-    private void sendRatingToServer(int maPhim, int maNguoiDung, float rating) {
-        PhimDAO phimDAO = new PhimDAO();
-        phimDAO.sendDanhGiaPhim(maPhim, maNguoiDung, rating, new PhimDAO.SendDanhGiaCallback() {
-            @Override
-            public void onSuccess() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(ChiTietPhimActivity.this, "Đã gửi đánh giá thành công", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-
-            @Override
-            public void onFailure(String error) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(ChiTietPhimActivity.this, "Lỗi khi gửi đánh giá: " + error, Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
-    }
 
     @Override
     public void onResume() {
@@ -299,7 +295,7 @@ public class ChiTietPhimActivity extends AppCompatActivity {
     private void fetchPhimDetails(int maPhim) {
         PhimDAO phimDAO = new PhimDAO();
         TapPhimDAO tapPhimDAO=new TapPhimDAO();
-        tapPhimDAO.getTapPhim(maPhim,new TapPhimDAO.TapPhimCallback() {
+        tapPhimDAO.getTapPhim(maPhim,new TapPhimDAO.ListTapPhimCallback() {
             @Override
             public void onSuccess(List<TapPhim> tapPhimList) {
                 if (tapPhimList.isEmpty()) {
@@ -364,6 +360,7 @@ public class ChiTietPhimActivity extends AppCompatActivity {
 
     private void fetchDanhGiaPhim(int maPhim) {
         PhimDAO phimDAO = new PhimDAO();
+        maDanhGia = -1;
         phimDAO.getDanhGiaPhim(maPhim, new PhimDAO.DanhGiaCallback() {
             @Override
             public void onSuccess(List<DanhGia> danhGiaList) {
@@ -376,6 +373,7 @@ public class ChiTietPhimActivity extends AppCompatActivity {
                         averageRating += danhGia.getDanhGia();
                         if (danhGia.getMaNguoiDung() == maNguoiDung) {
                             userRating = danhGia.getDanhGia();
+                            maDanhGia=danhGia.getMaDanhGia();
                         }
                     }
                     averageRating /= totalRatings;

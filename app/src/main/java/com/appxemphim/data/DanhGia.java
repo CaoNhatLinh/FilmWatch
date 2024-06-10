@@ -12,10 +12,17 @@ public class DanhGia {
         NgayDanhGia = ngayDanhGia;
     }
 
-    public DanhGia(int maNguoiDung, int maPhim, float rating, Date date) {
-    }
 
     public DanhGia(int maPhim, int maNguoiDung, float rating) {
+        MaPhim=maPhim;
+        MaNguoiDung=maNguoiDung;
+        DanhGia=rating;
+    }
+    public DanhGia(int maDanhGia,int maPhim, int maNguoiDung, float rating) {
+        MaDanhGia=maDanhGia;
+        MaPhim=maPhim;
+        MaNguoiDung=maNguoiDung;
+        DanhGia=rating;
     }
 
 
