@@ -13,12 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.appxemphim.Api.ApiType;
 import com.appxemphim.R;
 import com.appxemphim.Utils.ItemClickSupport;
 import com.appxemphim.Utils.Utils;
 import com.appxemphim.activities.ChiTietPhimActivity;
+import com.appxemphim.activities.MovieActivity;
 import com.appxemphim.activities.SearchActivity;
 import com.appxemphim.activities.SharedListPhimActivity;
 import com.appxemphim.adapters.BannerAdapter;
@@ -37,6 +39,7 @@ public class HomeFragment extends Fragment {
     private BannerAdapter posterAdapter;
     private ListPhimAdapter phimMoiAdapter,phimTrungQuocHotAdapter,phimHanHotAdapter,loveAdapter,animeAdapter;
     private Button btnChina,btnKorea,btnLove,btnAnime;
+    private ImageView filterButton;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -72,6 +75,8 @@ public class HomeFragment extends Fragment {
         btnKorea = view.findViewById(R.id.btnMoreKorea);
         btnAnime = view.findViewById(R.id.btnMoreAnime);
         btnLove = view.findViewById(R.id.btnMoreLove);
+        filterButton = view.findViewById(R.id.filterButton);
+
     }
     private ListPhimAdapter createPhimAdapter() {
         return new ListPhimAdapter(getContext(), new ArrayList<>());
@@ -107,6 +112,15 @@ public class HomeFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), SearchActivity.class);
                     startActivity(intent);
                 }
+            }
+        });
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                    Intent intent = new Intent(getActivity(), MovieActivity.class);
+                    startActivity(intent);
+
             }
         });
         return view;

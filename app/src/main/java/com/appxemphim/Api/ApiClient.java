@@ -108,6 +108,14 @@ public interface ApiClient {
     @DELETE("api/yeuthich/{maNguoiDung}/{maPhim}")
     Call<Void> deleteYeuThich(@Path("maNguoiDung") int maNguoiDung, @Path("maPhim") int maPhim);
 
+    // Lấy danh sách các quốc gia
+    @GET("api/phim/countries")
+    Call<List<String>> getCountries();
+
+    // Lấy danh sách phim theo quốc gia
+    @GET("api/phim/countries/{country}")
+    Call<List<Phim>> getMoviesByCountry(@Path("country") String country);
+
 //    // Yeu thich
 //    @GET("api/YeuThich")
 //    Call<List<YeuThich>> getListYeuThich();

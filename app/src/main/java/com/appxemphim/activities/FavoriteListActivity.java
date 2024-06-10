@@ -40,10 +40,16 @@ public class FavoriteListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Phim selectedPhim = phimYeuThichList.get(position);
-                // Chuyển sang màn hình chi tiết phim và truyền thông tin của bộ phim đó
-//                Intent intent = new Intent(FavoriteListActivity.this, ChiTietPhimActivity.class);
-//                intent.putExtra("phim", selectedPhim);
-//                startActivity(intent);
+                // Xử lý sự kiện click trên danh sách phim
+
+                        if (selectedPhim != null) {
+
+
+                            Intent intent = new Intent(FavoriteListActivity.this, ChiTietPhimActivity.class);
+                            intent.putExtra("MaPhim", selectedPhim.getMaPhim());
+                            startActivity(intent);
+
+                        }
             }
         });
     }
