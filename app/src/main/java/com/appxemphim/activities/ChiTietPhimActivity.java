@@ -186,7 +186,7 @@ public class ChiTietPhimActivity extends AppCompatActivity {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
                     isFavorite = false;
-                    favoriteButton.setImageResource(R.drawable.ic_favorite_border); // Cập nhật biểu tượng yêu thích
+                    favoriteButton.setImageResource(R.drawable.ic_favorite_outline); // Cập nhật biểu tượng yêu thích
                     Toast.makeText(ChiTietPhimActivity.this, "Đã xóa khỏi danh sách yêu thích", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(ChiTietPhimActivity.this, "Không thể xóa khỏi danh sách yêu thích", Toast.LENGTH_SHORT).show();
