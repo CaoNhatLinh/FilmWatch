@@ -23,7 +23,7 @@ import retrofit2.http.GET;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.POST;
-
+import retrofit2.http.Query;
 public interface ApiClient {
 
     Gson gson = new GsonBuilder()
@@ -62,7 +62,8 @@ public interface ApiClient {
     Call<List<Phim>> getListTopLove();
     @GET("api/phim/love")
     Call<List<Phim>> getAllListLove();
-
+    @GET("api/tapphim/xemphim/{matapphim}")
+    Call<TapPhim> getTapPhim(@Path("matapphim") int MaTapPhim);
     //Tap phim
     @GET("api/tapphim/{id}")
     Call<List<TapPhim>> getListTapPhim(@Path("id") int MaPhim);
@@ -73,12 +74,20 @@ public interface ApiClient {
     Call<NguoiDung> getProfileByTenDangNhap(@Path("TenDangNhap") String TenDangNhap);
     @PUT("api/nguoidung/{id}")
     Call<NguoiDung> editNguoiDung(@Path("id") int MaNguoiDung, @Body NguoiDung nguoidung);
+    @POST("api/phim_nguoidung/")
+    Call<Void> addHistory(@Body Phim_NguoiDung phim_nguoiDung);
+    @PUT("api/phim_nguoidung/{id}")
+    Call<Void> editHistory(@Path("id") int maPhim_NguoiDung,@Body Phim_NguoiDung phim_nguoiDung);
+
+    @GET("api/phim_nguoidung/Tim/{maNguoiDung}/{maPhim}")
+    Call<Phim_NguoiDung> getHistoryByMaPhim(@Path("maNguoiDung") int MaNguoiDung,@Path("maPhim") int maPhim);
     //Triệu thêm
     // Đăng nhập
     //Nguoi dung
     @POST("api/nguoidung/login")
     Call<NguoiDung> login(@Body LoginRequest loginRequest);
-
+    @GET("api/phim/search1/{title}")
+    Call<List<Phim>> searchPhimByTitle(@Path("title") String title);
     @POST("api/nguoidung/register") // Địa chỉ endpoint cho đăng ký
     Call<Void> register(@Body NguoiDung registerRequest);
     @GET("api/phim/{id}")
@@ -128,6 +137,7 @@ public interface ApiClient {
     @POST("api/phim/{phimId}/comments")
     Call<Void> sendBinhLuanPhim(@Path("phimId") int phimId, @Body BinhLuan binhLuan);
 
-    Call<List<Phim_NguoiDung>> getHistory(int maNguoidung);
+    @GET("api/phim_nguoidung/MaNguoiDung/{maNguoiDung}")
+    Call<List<Phim_NguoiDung>> getHistory(@Path("maNguoiDung") int maNguoiDung);
 }
 
