@@ -165,7 +165,7 @@ public class PhimDAO {
         call.enqueue(callback);
     }
     public void updateDanhGiaPhim(int maDanhGia,int maPhim,int maNguoiDung,float rating, Callback<Void> callback) {
-        DanhGia danhGia=new DanhGia(maPhim,maNguoiDung,rating);
+        DanhGia danhGia= new DanhGia(maDanhGia,maPhim,maNguoiDung,rating);
         Call<Void> call = ApiClient.apiClient.updateDanhGiaPhim(maDanhGia,danhGia);
         call.enqueue(callback);
     }
