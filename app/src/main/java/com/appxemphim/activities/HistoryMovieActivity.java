@@ -81,9 +81,10 @@ public class HistoryMovieActivity extends AppCompatActivity {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                 // Handle item click here
-                Phim_NguoiDung phim = historyAdapter.getPhimAtPosition(position);
-                Intent intent = new Intent(getApplicationContext(), ChiTietPhimActivity.class);
-                intent.putExtra("MaPhim", phim.getMaPhim());
+                Phim_NguoiDung phim_nguoiDung = historyAdapter.getPhimAtPosition(position);
+                Intent intent = new Intent(getApplicationContext(), XemPhimActivity.class);
+                intent.putExtra("MaTapPhim", phim_nguoiDung.getMaTapPhim());
+                intent.putExtra("MaPhim", phim_nguoiDung.getMaPhim());
                 startActivity(intent);
             }
         });

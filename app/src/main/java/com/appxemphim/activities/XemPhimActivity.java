@@ -53,15 +53,14 @@ public class XemPhimActivity extends AppCompatActivity {
         playerView = findViewById(R.id.videoView);
         tapPhimDAO = new TapPhimDAO();
         maPhim = getIntent().getIntExtra("MaPhim", -1);
+        maTapPhim = getIntent().getIntExtra("MaTapPhim", -1);
         recyclerView = findViewById(R.id.rvTapPhim);
         tieude = findViewById(R.id.titlePhim);
         danhsachphat = findViewById(R.id.txtDanhSachPhat);
-
-        maTapPhim = -1;
         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 4));
         tapPhimAdapter = new TapPhimAdapter(getApplicationContext(),new ArrayList<>());
         recyclerView.setAdapter(tapPhimAdapter);
-        fetchPhimDetails(maPhim);
+        fetchPhimDetails();
     }
     @Override
     protected void onStart() {
@@ -137,7 +136,6 @@ public class XemPhimActivity extends AppCompatActivity {
             }
         });
     }
-
     private void loaddanhsachtap(int maphim) {
 
         tapPhimDAO.getTapPhim(maphim, new TapPhimDAO.ListTapPhimCallback() {
@@ -153,8 +151,10 @@ public class XemPhimActivity extends AppCompatActivity {
                     loadThongTinTapPhim(phimList.get(0).getMaTapPhim());
                     maTapPhim = phimList.get(0).getMaTapPhim();
                 }
+                else loadThongTinTapPhim(maTapPhim);
 
                 tapPhimAdapter.updateTapPhimList(phimList);
+
                 tapPhimAdapter.setOnItemClickListener(new TapPhimAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(TapPhim tapPhim) {
@@ -170,7 +170,8 @@ public class XemPhimActivity extends AppCompatActivity {
             }
         });
     }
-    private void fetchPhimDetails(int maPhim) {
+    private void fetchPhimDetails() {
+
         PhimDAO phimDAO = new PhimDAO();
         phimDAO.getPhimById(maPhim, new PhimDAO.PhimByIdCallback() {
             @Override

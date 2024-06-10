@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -16,6 +17,7 @@ import com.appxemphim.R;
 import com.appxemphim.Utils.ItemClickSupport;
 import com.appxemphim.Utils.Utils;
 import com.appxemphim.activities.ChiTietPhimActivity;
+import com.appxemphim.activities.SearchActivity;
 import com.appxemphim.adapters.ListPhimAdapter;
 import com.appxemphim.dao.PhimDAO;
 import com.appxemphim.data.Phim;
@@ -48,6 +50,16 @@ public class ListPhimFragment extends Fragment {
         phimAdapter = new ListPhimAdapter(getContext(),new ArrayList<>());
         recyclerView.setAdapter(phimAdapter);
         Utils.setupRecyclerViewClickListener(getActivity(), recyclerView, phimAdapter, ChiTietPhimActivity.class);
+        EditText etTimKiem = view.findViewById(R.id.etTimKiem);
+        etTimKiem.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    Intent intent = new Intent(getActivity(), SearchActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
         return view;
     }
     @Override
