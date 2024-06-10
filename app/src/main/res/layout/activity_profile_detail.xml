@@ -82,9 +82,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewUsername"
-            android:hint="Nhập tên đăng nhập"
             android:inputType="text"
             android:minHeight="48dp"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:textColor="@color/light_white"
              android:textColorHint="@color/light_white" />
 
