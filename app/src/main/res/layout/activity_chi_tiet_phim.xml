@@ -186,57 +186,6 @@
         </LinearLayout>
     </ScrollView>
 
-    <TextView
-        android:id="@+id/tvCommentsHeader"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Bình luận"
-        android:textSize="18sp"
-        android:textColor="@android:color/black"
-        android:padding="16dp"
-        app:layout_constraintTop_toBottomOf="@id/scrollView" />
-
-    <!-- RecyclerView for Comments -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewComments"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:clipToPadding="false"
-        android:clipChildren="false"
-        app:layout_constraintBottom_toTopOf="@id/commentInputLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvCommentsHeader" />
-
-    <!-- Comment Input Layout -->
-    <LinearLayout
-        android:id="@+id/commentInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        app:layout_constraintBottom_toTopOf="@id/bottomNavigation">
-
-        <!-- Comment Input Field -->
-        <EditText
-            android:id="@+id/editTextComment"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Nhập bình luận của bạn"
-            android:minHeight="48dp"
-            android:textSize="16sp" />
-
-        <!-- Send Comment Button -->
-        <Button
-            android:id="@+id/buttonSendComment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Gửi"/>
-    </LinearLayout>
 
     <!-- Watch Movie Button -->
     <Button

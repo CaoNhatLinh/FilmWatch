@@ -175,41 +175,41 @@ public class PhimDAO {
             }
         });
     }
-    public void sendDanhGiaPhim(int maPhim, int maNguoiDung, float rating, SendDanhGiaCallback callback) {
-        DanhGia danhGia = new DanhGia(0, maNguoiDung, maPhim, rating, new Date());
-        Call<Void> call = apiClient.sendDanhGiaPhim(maPhim, danhGia);
+    public void sendDanhGiaPhim(int maPhim, int maNguoiDung, float danhGia, final SendDanhGiaCallback callback) {
+        DanhGia danhGiaObj = new DanhGia(maPhim, maNguoiDung, danhGia);
+        Call<Void> call = apiClient.sendDanhGiaPhim(maPhim, danhGiaObj);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    callback.onSuccess();
+                    callback.onSuccess(); // Gọi callback onSuccess nếu thành công
                 } else {
-                    callback.onFailure("Server returned: " + response.code());
+                    callback.onFailure("Server returned: " + response.code()); // Gọi callback onFailure nếu có lỗi
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                callback.onFailure(t.getMessage());
+                callback.onFailure(t.getMessage()); // Gọi callback onFailure nếu có lỗi
             }
         });
     }
-    public void updateDanhGiaPhim(int maPhim, int maNguoiDung, float rating, final UpdateDanhGiaCallback callback) {
-        DanhGia danhGia = new DanhGia(0, maNguoiDung, maPhim, rating, new Date());
-        Call<Void> call = apiClient.updateDanhGiaPhim(maPhim, maNguoiDung, danhGia);
+
+    public void updateDanhGiaPhim(int maPhim, int maNguoiDung, float danhGiaMoi, final UpdateDanhGiaCallback callback) {
+        Call<Void> call = apiClient.updateDanhGiaPhim(maPhim, maNguoiDung, danhGiaMoi); // Gửi yêu cầu cập nhật đánh giá đến máy chủ
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    callback.onSuccess();
+                    callback.onSuccess(); // Gọi callback onSuccess nếu thành công
                 } else {
-                    callback.onFailure("Server returned: " + response.code());
+                    callback.onFailure("Server returned: " + response.code()); // Gọi callback onFailure nếu có lỗi
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                callback.onFailure(t.getMessage());
+                callback.onFailure(t.getMessage()); // Gọi callback onFailure nếu có lỗi
             }
         });
     }

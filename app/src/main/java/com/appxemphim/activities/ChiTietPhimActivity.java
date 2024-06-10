@@ -60,7 +60,7 @@ public class ChiTietPhimActivity extends AppCompatActivity {
         movieRatingBar = findViewById(R.id.movieRatingBar);
         playFlim = findViewById(R.id.watchMovieButton);
         favoriteButton = findViewById(R.id.favoriteButton);
-
+        maNguoiDung=getCurrentUserID();
         maPhim = getIntent().getIntExtra("MaPhim", -1);
         if (maPhim != -1) {
             fetchPhimDetails(maPhim);
@@ -350,12 +350,18 @@ public class ChiTietPhimActivity extends AppCompatActivity {
             public void onSuccess(List<DanhGia> danhGiaList) {
                 if (!danhGiaList.isEmpty()) {
                     double averageRating = 0;
+                    float userRating = 0;
+                    int totalRatings = danhGiaList.size();
+
                     for (DanhGia danhGia : danhGiaList) {
                         averageRating += danhGia.getDanhGia();
+                        if (danhGia.getMaNguoiDung() == maNguoiDung) {
+                            userRating = danhGia.getDanhGia();
+                        }
                     }
-                    averageRating /= danhGiaList.size();
-                    ratingTextView.setText("Đánh giá: " + String.format(Locale.getDefault(), "%.1f", averageRating) + "/5");
-                    movieRatingBar.setRating((float) averageRating);
+                    averageRating /= totalRatings;
+                    ratingTextView.setText("Đánh giá: " + String.format(Locale.getDefault(), "%.1f", averageRating) + "/5.0");
+                    movieRatingBar.setRating(userRating); // Đặt đánh giá của người dùng vào MovieRatingBar
                 } else {
                     ratingTextView.setText("Chưa có đánh giá");
                 }
