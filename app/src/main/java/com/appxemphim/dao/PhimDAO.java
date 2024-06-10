@@ -177,25 +177,25 @@ public class PhimDAO {
             }
         });
     }
-
-    public void updateDanhGiaPhim(int maPhim, int maNguoiDung, float danhGiaMoi, final UpdateDanhGiaCallback callback) {
-        Call<Void> call = apiClient.updateDanhGiaPhim(maPhim, maNguoiDung, danhGiaMoi); // Gửi yêu cầu cập nhật đánh giá đến máy chủ
+    public void updateDanhGiaPhim(int phimId, int userId, float newDanhGia, final UpdateDanhGiaCallback callback) {
+        Call<Void> call = apiClient.updateDanhGiaPhim(phimId, userId, newDanhGia);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    callback.onSuccess(); // Gọi callback onSuccess nếu thành công
+                    callback.onSuccess();
                 } else {
-                    callback.onFailure("Server returned: " + response.code()); // Gọi callback onFailure nếu có lỗi
+                    callback.onFailure("Server returned: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                callback.onFailure(t.getMessage()); // Gọi callback onFailure nếu có lỗi
+                callback.onFailure(t.getMessage());
             }
         });
     }
+
     public void getBinhLuanPhim(int phimId, final BinhLuanCallback callback) {
         Call<List<BinhLuan>> call = apiClient.getBinhLuanPhim(phimId);
         call.enqueue(new Callback<List<BinhLuan>>() {
