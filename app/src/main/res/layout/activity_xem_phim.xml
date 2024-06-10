@@ -44,7 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
         app:layout_constraintVertical_bias="0.0"
         app:resize_mode="fill" />
-    <ScrollView
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
@@ -65,14 +65,14 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/titlePhim"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="titlePhim"
+                    android:text=""
                     android:textColor="@color/light_white"
                     android:textSize="18dp" />
             </LinearLayout>
@@ -88,11 +88,11 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvTapPhim"
+                android:layout_marginTop="12dp"
                 android:layout_width="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_height="437dp" />
+                android:layout_height="match_parent" />
         </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
