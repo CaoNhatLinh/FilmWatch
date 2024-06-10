@@ -74,6 +74,13 @@ public interface ApiClient {
     Call<NguoiDung> getProfileByTenDangNhap(@Path("TenDangNhap") String TenDangNhap);
     @PUT("api/nguoidung/{id}")
     Call<NguoiDung> editNguoiDung(@Path("id") int MaNguoiDung, @Body NguoiDung nguoidung);
+    @POST("api/phim_nguoidung/")
+    Call<Void> addHistory(@Body Phim_NguoiDung phim_nguoiDung);
+    @PUT("api/phim_nguoidung/{id}")
+    Call<Void> editHistory(@Path("id") int maPhim_NguoiDung,@Body Phim_NguoiDung phim_nguoiDung);
+
+    @GET("api/phim_nguoidung/Tim/{maNguoiDung}/{maPhim}")
+    Call<Phim_NguoiDung> getHistoryByMaPhim(@Path("maNguoiDung") int MaNguoiDung,@Path("maPhim") int maPhim);
     //Triệu thêm
     // Đăng nhập
     //Nguoi dung

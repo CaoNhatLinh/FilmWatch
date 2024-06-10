@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingHorizontal="12dp"
-        android:background="@drawable/bg_focus"
+        android:background="@drawable/bg_coordinatorlayout"
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Phim áđasadsad"
+                android:text="Phim ..."
                 android:textColor="@color/light_white"
                 android:textSize="20dp"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -36,14 +36,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:text="Đang xem tới tập 1"
+                android:text="Đang xem ..."
                 android:textColor="@color/light_white"
                 android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:ignore="TextSizeCheck"
                 tools:layout_editor_absoluteX="16dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginVertical="3dp" />
     </LinearLayout>
 
 </LinearLayout>

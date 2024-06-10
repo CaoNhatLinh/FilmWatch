@@ -102,24 +102,7 @@ public class PhimDAO {
         }
     }
 
-    public void getListPhimDaXem(final PhimCallback callback) {
-        Call<List<Phim>> call = apiClient.getListPhimDaXem();
-        call.enqueue(new Callback<List<Phim>>() {
-            @Override
-            public void onResponse(Call<List<Phim>> call, Response<List<Phim>> response) {
-                if (response.isSuccessful()) {
-                    List<Phim> phimList = response.body();
-                    callback.onSuccess(phimList);
-                } else {
-                    callback.onFailure("Failed to fetch data: " + response.message());
-                }
-            }
-            @Override
-            public void onFailure(Call<List<Phim>> call, Throwable t) {
-                callback.onFailure(t.getMessage());
-            }
-        });
-    }
+
     public void getPhimById(int id, final PhimByIdCallback callback) {
         Call<Phim> call = apiClient.getPhimById(id);
         call.enqueue(new Callback<Phim>() {

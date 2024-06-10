@@ -67,7 +67,7 @@ public class HistoryMovieActivity extends AppCompatActivity {
         historyAdapter = new historyAdapter(getApplicationContext(),new ArrayList<>());
         rvHistoryMovies.setAdapter(historyAdapter);
         phimNguoiDungDAO = new Phim_NguoiDungDAO();
-        phimNguoiDungDAO.getHistory(MaNguoiDung,new Phim_NguoiDungDAO.historyCallback() {
+        phimNguoiDungDAO.getHistory(MaNguoiDung,new Phim_NguoiDungDAO.historiesCallback() {
             @Override
             public void onSuccess(List<Phim_NguoiDung> histories) {
                 historyAdapter.updatePhimList(histories);

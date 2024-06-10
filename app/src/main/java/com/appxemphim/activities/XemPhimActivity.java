@@ -3,6 +3,8 @@ package com.appxemphim.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,8 +17,11 @@ import android.widget.Toast;
 import com.appxemphim.R;
 import com.appxemphim.adapters.TapPhimAdapter;
 import com.appxemphim.dao.PhimDAO;
+import com.appxemphim.dao.Phim_NguoiDungDAO;
 import com.appxemphim.dao.TapPhimDAO;
+import com.appxemphim.data.DanhGia;
 import com.appxemphim.data.Phim;
+import com.appxemphim.data.Phim_NguoiDung;
 import com.appxemphim.data.TapPhim;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
@@ -26,6 +31,10 @@ import com.google.android.exoplayer2.ui.PlayerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class XemPhimActivity extends AppCompatActivity {
     private PlayerView playerView;
     private ExoPlayer player;
@@ -34,8 +43,7 @@ public class XemPhimActivity extends AppCompatActivity {
     private boolean isPlayerInitialized = false;
     private RecyclerView recyclerView;
     private TextView tieude,danhsachphat;
-    private int maPhim;
-    private  int maTapPhim;
+    private  int maPhim,maTapPhim,maNguoiDung;
     private String tentap,tenphim;
     StringBuilder title = new StringBuilder();
     @Override
@@ -116,10 +124,11 @@ public class XemPhimActivity extends AppCompatActivity {
             @Override
             public void onSuccess(TapPhim tapPhim) {
                 tentap = tapPhim.getTenTap().toString();
+                maTapPhim = tapPhim.getMaTapPhim();
                 String videoUrls = tapPhim.getLienKetPhim();
                 initializePlayer(videoUrls);
                 LoadTieuDe();
-
+                checkAndSendHistoryToServer(maPhim,maTapPhim);
             }
 
             @Override
@@ -142,6 +151,7 @@ public class XemPhimActivity extends AppCompatActivity {
                 if(maTapPhim ==-1)
                 {
                     loadThongTinTapPhim(phimList.get(0).getMaTapPhim());
+                    maTapPhim = phimList.get(0).getMaTapPhim();
                 }
 
                 tapPhimAdapter.updateTapPhimList(phimList);
@@ -182,6 +192,53 @@ public class XemPhimActivity extends AppCompatActivity {
         title.append(" - ");
         title.append(tentap);
         tieude.setText(title.toString());
+    }
+    private void checkAndSendHistoryToServer(int maPhim,int maTapPhimNew) {
+        maNguoiDung = getCurrentUserID();
+        if (maNguoiDung == -1) {
+            Toast.makeText(this, "Không thể lấy mã người dùng. Vui lòng đăng nhập lại.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Phim_NguoiDungDAO phimNguoiDungDAO = new Phim_NguoiDungDAO();
+        phimNguoiDungDAO.getHistoryByMaPhim(maNguoiDung, maPhim, new Phim_NguoiDungDAO.historyCallback() {
+            @Override
+            public void onSuccess(Phim_NguoiDung history) {
+                    int maTapPhimOld = history.getMaTapPhim();
+                    if(maTapPhimOld == maTapPhim)
+                    {
+
+                    }
+                    else
+                        phimNguoiDungDAO.editHistory(history.getMaPhim_NguoiDung(), maNguoiDung, maPhim, maTapPhimNew, new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+
+                            }
+                        });
+                }
+            @Override
+            public void onFailure(String message) {
+                phimNguoiDungDAO.addHistory(maNguoiDung, maPhim, maTapPhimNew, new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
+    }
+
+    private int getCurrentUserID() {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        return sharedPreferences.getInt("userId", -1);
     }
 
 }
