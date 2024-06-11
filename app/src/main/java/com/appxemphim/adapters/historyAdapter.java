@@ -61,7 +61,7 @@ public class historyAdapter extends RecyclerView.Adapter<historyAdapter.PhimItem
             @Override
             public void onSuccess(Phim phim) {
                 String tenphim = phim.getTieuDe().toString();
-                holder.TitlePhim.setText(CapitalizeWords.capitalizeWords(tenphim));
+                holder.TitlePhim.setText(CapitalizeWords.capitalizeWords(shortenToTenWords(tenphim)));
                 Picasso.with(context)
                         .load(phim.getAnhBia())
                         .into(holder.ivPhim);
@@ -97,17 +97,18 @@ public class historyAdapter extends RecyclerView.Adapter<historyAdapter.PhimItem
     }
     public static String shortenToTenWords(String input) {
         String[] words = input.split("\\s+");
-        if (words.length <= 6) {
+        if (words.length <= 8) {
             return input;
         }
         StringBuilder shortenedString = new StringBuilder();
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 8; i++) {
             shortenedString.append(words[i]);
-            if (i < 5) {
+            if (i < 7) {
                 shortenedString.append(" ");
             }
         }
         shortenedString.append("...");
         return shortenedString.toString();
     }
+
 }
