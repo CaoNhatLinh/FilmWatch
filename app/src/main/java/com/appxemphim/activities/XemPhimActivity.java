@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +27,7 @@ import com.appxemphim.data.TapPhim;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.ui.PlayerView;
 
 import java.util.ArrayList;
@@ -240,6 +242,40 @@ public class XemPhimActivity extends AppCompatActivity {
     private int getCurrentUserID() {
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         return sharedPreferences.getInt("userId", -1);
+    }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Kiểm tra hướng màn hình
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // Điều chỉnh giao diện cho chế độ ngang
+            playerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FILL);
+            hideSystemUI();
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            // Điều chỉnh giao diện cho chế độ dọc
+            playerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
+            showSystemUI();
+        }
+    }
+
+    private void hideSystemUI() {
+        // Bật chế độ ẩn toàn màn hình
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_IMMERSIVE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN);
+    }
+
+    private void showSystemUI() {
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
 
 }

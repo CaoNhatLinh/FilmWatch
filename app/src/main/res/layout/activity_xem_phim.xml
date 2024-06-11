@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_main"
-    android:orientation="horizontal"
     tools:context=".activities.XemPhimActivity">
+
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
@@ -39,60 +39,53 @@
     <com.google.android.exoplayer2.ui.PlayerView
         android:id="@+id/videoView"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="16:9"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+        app:layout_constraintBottom_toTopOf="@+id/contentLayout"
         app:layout_constraintVertical_bias="0.0"
         app:resize_mode="fill" />
+
     <LinearLayout
-        android:layout_width="0dp"
+        android:id="@+id/contentLayout"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:orientation="vertical"
         android:layout_marginTop="16dp"
-        android:contentDescription="@string/action_sign_in"
         android:paddingHorizontal="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/videoView"
-        app:layout_constraintVertical_bias="1.0" >
+        app:layout_constraintVertical_bias="1.0">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/titlePhim"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="@color/light_white"
-                    android:textSize="18dp" />
-            </LinearLayout>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/txtDanhSachPhat"
+                android:id="@+id/titlePhim"
                 android:layout_width="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
-                android:text="Danh sách phát"
+                android:text=""
                 android:textColor="@color/light_white"
                 android:textSize="18dp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvTapPhim"
-                android:layout_marginTop="12dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
         </LinearLayout>
-    </LinearLayout>
 
+        <TextView
+            android:id="@+id/txtDanhSachPhat"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:text="Danh sách phát"
+            android:textColor="@color/light_white"
+            android:textSize="18dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTapPhim"
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -51,6 +51,8 @@
             android:exported="false" />
         <activity
             android:name=".activities.XemPhimActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensor"
             android:exported="false" />
         <activity
             android:name=".activities.MainActivity"
