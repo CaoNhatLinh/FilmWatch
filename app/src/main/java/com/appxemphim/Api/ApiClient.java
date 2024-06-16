@@ -30,7 +30,7 @@ public interface ApiClient {
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
             .create();
     ApiClient apiClient = new Retrofit.Builder()
-            .baseUrl("https://backend-api-moives-1.onrender.com/")
+            .baseUrl("https://backend-api-moives.onrender.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ApiClient.class);
