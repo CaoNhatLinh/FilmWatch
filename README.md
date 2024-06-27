@@ -2,7 +2,7 @@
 
 ---
 ### Add dependencies in file `build.gradle.kts` (module:app)
-`
+```
 dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.12.0")
@@ -24,7 +24,7 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.12.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0" )
 }
-`
+```
 ### backend
-> api : [backend-api-movies]([https://www.example.com](https://github.com/CaoNhatLinh/backend-api-movies))
-> admin : [MovieAdminLaravel](https://github.com/CaoNhatLinh/MovieAdminLaravel)
+- api : [backend-api-movies](https://github.com/CaoNhatLinh/backend-api-movies)
+- admin : [MovieAdminLaravel](https://github.com/CaoNhatLinh/MovieAdminLaravel)
