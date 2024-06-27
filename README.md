@@ -1,5 +1,7 @@
+# Movie watching application for Android uses Java language
+
 ---
-### Add dependencies
+### Add dependencies in file `build.gradle.kts` (module:app)
 `
 dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -23,3 +25,6 @@ dependencies {
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0" )
 }
 `
+### backend
+> api : [backend-api-movies]([https://www.example.com](https://github.com/CaoNhatLinh/backend-api-movies))
+> admin : [MovieAdminLaravel](https://github.com/CaoNhatLinh/MovieAdminLaravel)
